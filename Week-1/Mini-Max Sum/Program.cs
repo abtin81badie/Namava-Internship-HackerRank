@@ -14,29 +14,15 @@ using System;
 
 class Result
 {
-
-    public static void miniMaxSum(List<int> arr)
+    public static void plusMinus(List<int> arr)
     {
-        arr.Sort();
-        double maxSum = 0;
-        double minSum = 0;
+        int totalCount = arr.Count;
 
-        for (int i = 0; i < arr.Count; i++) 
-        {
-            if (i == 0) {
-                minSum += arr[i];
-            } else if (i == arr.Count - 1)
-            {
-                maxSum += arr[i];
-            }
-            else
-            {
-                maxSum += arr[i];
-                minSum += arr[i];
-            }
-        }
+        double positiveRatio = (double)arr.Count(num => num > 0) / totalCount;
+        double negativeRatio = (double)arr.Count(num => num < 0) / totalCount;
+        double zeroRatio = (double)arr.Count(num => num == 0 ) / totalCount;
 
-        Console.WriteLine($"{minSum} {maxSum}");
+        Console.WriteLine($"{positiveRatio:F6}\n{negativeRatio:F6}\n{zeroRatio:F6}");
     }
 
 }
@@ -45,9 +31,10 @@ class Solution
 {
     public static void Main(string[] args)
     {
+        int n = Convert.ToInt32(Console.ReadLine().Trim());
 
         List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
 
-        Result.miniMaxSum(arr);
+        Result.plusMinus(arr);
     }
 }
