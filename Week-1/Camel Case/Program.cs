@@ -1,147 +1,148 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
 class Solution
 {
-    static string SplitCamelCase(string type, string input)
+    // Helpers and Parsers
+    private enum Operation { Split, Combine }
+    private enum IdentifierType { Method, Class, Variable }
+
+    private static (string, string, string) ParseInput(string line)
     {
-        List<string> list = new List<string>();
+        string[] parts = line.Split(';');
+        return (parts[0], parts[1], parts[2]);
+    }
 
-        if (type == "M")
+    private static Operation ParseOperation(string opStr) => opStr.ToUpper() switch
+    {
+        "S" => Operation.Split,
+        "C" => Operation.Combine
+    };
+
+    private static IdentifierType ParseIdentifierType(string typeStr) => typeStr.ToUpper() switch
+    {
+        "M" => IdentifierType.Method,
+        "C" => IdentifierType.Class,
+        "V" => IdentifierType.Variable,
+    };
+
+    // Routes the request to the correct conversion methode.
+    private static string Process(Operation operation, IdentifierType type, string content) 
+    {
+        return operation switch 
+        { 
+            Operation.Split => SplitIdentifier(type, content),
+            Operation.Combine => CombineIdentifier(type, content)
+        };
+    }
+    
+    // Splitting Logic
+    private static string SplitIdentifier(IdentifierType type, string input)
+    {
+        string cleanInput = type == IdentifierType.Method ? input.Replace("()","") : input;
+
+        string spaced = Regex.Replace(cleanInput, "(?<=[a-z])(?=[A-Z])", " ");
+
+        return spaced.ToLower();
+    }
+
+    private static string SplitIdntifierWithLoop(IdentifierType type, string input)
+    {
+        string cleanInput = type == IdentifierType.Method ? input.Replace("()", "") : input;
+
+        var builder = new StringBuilder();
+        builder.Append(cleanInput[0]);
+
+        for (int i = 1; i < cleanInput.Length; i++)
         {
-            string temp = "";
-            for (int i = 0; i < input.Length; i++)
+            if (char.IsUpper(cleanInput[i]))
             {
-                if (char.IsUpper(input[i]))
-                {
-                    list.Add(temp.ToLower());
-                    temp = "";
-                }
-
-                if (input[i] == '(')
-                {
-                    list.Add(temp.ToLower());
-                    break;
-                }
-
-                temp += input[i];
+                builder.Append(" ");
             }
+            builder.Append(cleanInput[i]);
         }
 
-        if (type == "C")
+        return builder.ToString().ToLower();
+    }
+
+
+    // Combining Logic
+    private static string Capitalize(string input) 
+    {
+        return string.IsNullOrEmpty(input) ? input : char.ToUpper(input[0]) + input.Substring(1);
+    }
+
+    private static string CombineIdentifier(IdentifierType type, string input)
+    {
+        string[] words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+
+
+        var transformedWords = words.Select((word, index) =>
         {
-            string temp = "";
-            for (int i = 0; i < input.Length; i++)
+            if (type == IdentifierType.Class)
             {
-                if (char.IsUpper(input[i]))
-                {
-                    list.Add(temp.ToLower());
-                    temp = "";
-                }
-
-                if (i == input.Length - 1)
-                {
-                    temp += input[i];
-                    list.Add(temp.ToLower());
-                    break;
-                }
-
-                temp += input[i];
+                return Capitalize(word);
             }
-        }
+            else
+            {
+                return index == 0 ? word.ToLower() : Capitalize(word);
+            }
+        });
 
-        if (type == "V")
+
+
+        string combined = string.Concat(transformedWords);
+
+        return type == IdentifierType.Method ? $"{combined}()" : combined;
+    }
+
+    private static string CombineIdentifierWithLoop(IdentifierType type, string input)
+    {
+        string[] words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+   
+        var builder = new StringBuilder();
+
+        for (int i = 0; i < words.Length; i++)
         {
-            string temp = "";
-            for (int i = 0; i < input.Length; i++)
+            string currentWord = words[i];
+            if (type == IdentifierType.Class) 
+            {
+                builder.Append(Capitalize(currentWord));
+            }
+            else 
             {
                 if (i == 0)
                 {
-                    temp += input[i];
+                    builder.Append(currentWord.ToLower());
                 }
-
-                if (char.IsUpper(input[i]))
+                else
                 {
-                    list.Add(temp.ToLower());
-                    temp = "";
+                    builder.Append(Capitalize(currentWord));
                 }
-
-                if (i == input.Length - 1)
-                {
-                    temp += input[i];
-                    list.Add(temp.ToLower());
-                    break;
-                }
-                
-                if (i != 0)
-                {
-                    temp += input[i];
-                }
-               
             }
         }
 
-        return string.Join(" ",list).TrimStart();
-    }
-
-    static string ToUpperFirst(string input)
-    {
-        return char.ToUpper(input[0]) + input.Substring(1);
-    }
-
-    static string CombineCamelCase(string type, string input)
-    {
-        string[] strings = input.Split(' ');
-        string result = "";
-        if (type == "M")
+        if (type == IdentifierType.Method)
         {
-            result += strings[0];
-            for (int i = 1; i < strings.Length; i++) 
-            {
-                result += ToUpperFirst(strings[i]);
-            }
-            result += "()";
+            builder.Append("()");
         }
 
-        if (type == "C")
-        {
-            for (int i = 0; i < strings.Length; i++) 
-            {
-                result += ToUpperFirst(strings[i]);
-            }
-        }
-
-        if (type == "V")
-        {
-            result += strings[0];
-            for (int i = 1; i < strings.Length; i++)
-            {
-                result += ToUpperFirst(strings[i]);
-            }
-        }
-
-        return result;
+        return builder.ToString();
     }
     static void Main(String[] args)
     {
         string line;
         while ((line = Console.ReadLine()) != null && !string.IsNullOrEmpty(line))
         {
-            string[] parts = line.Split(';');
-            string operation = parts[0];
-            string type = parts[1];
-            string content = parts[2];
+            var (operationStr, typeStr, content) = ParseInput(line);
 
-            string result = "";
-            if (operation == "S")
-            {
-                result = SplitCamelCase(type, content); 
-            }
-            else if (operation == "C") 
-            {
-                result = CombineCamelCase(type, content);   
-            }
+            var operation = ParseOperation(operationStr);
+            var identifierType = ParseIdentifierType(typeStr);
 
+            string result = Process(operation, identifierType, content);
             Console.WriteLine(result);
         }
     }
