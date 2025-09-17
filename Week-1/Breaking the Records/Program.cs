@@ -16,26 +16,28 @@ class Result
 {
     public static List<int> breakingRecords(List<int> scores)
     {
-        int min = scores[0], max = scores[0];
-        List<int> result = new List<int>();
-        result.Add(0);
-        result.Add(0);
-        
-        for (int i = 0; i < scores.Count; i++)
+        int highScore = scores[0];
+        int lowScore = scores[0];
+
+        int timeBrokeHighestRecord = 0;
+        int timeBrokeLowestRecord = 0;
+
+        foreach (var currentScore in scores)
         {
-            if (scores[i] > min) 
-            { 
-                result[0]++;
-                min = scores[i];            
+            if (currentScore > highScore) 
+            {
+                highScore = currentScore;
+                timeBrokeHighestRecord++;
             }
-            if (scores[i] < max) 
-            { 
-                result[1]++; 
-                max = scores[i];
+
+            if (currentScore < lowScore) 
+            {
+                lowScore = currentScore;
+                timeBrokeLowestRecord++;
             }
         }
 
-        return result;
+        return new List<int> { timeBrokeHighestRecord, timeBrokeLowestRecord };
     }
 
 }
