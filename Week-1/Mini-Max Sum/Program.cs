@@ -1,4 +1,4 @@
-﻿using System.CodeDom.Compiler;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections;
 using System.ComponentModel;
@@ -14,15 +14,32 @@ using System;
 
 class Result
 {
-    public static void plusMinus(List<int> arr)
+
+    public static void miniMaxSum(List<int> arr)
     {
-        int totalCount = arr.Count;
+        long totalSum = 0;
 
-        double positiveRatio = (double)arr.Count(num => num > 0) / totalCount;
-        double negativeRatio = (double)arr.Count(num => num < 0) / totalCount;
-        double zeroRatio = (double)arr.Count(num => num == 0 ) / totalCount;
+        long minElement = arr[0];
+        long maxElement = arr[0];
 
-        Console.WriteLine($"{positiveRatio:F6}\n{negativeRatio:F6}\n{zeroRatio:F6}");
+        foreach (int number in arr)
+        {
+            totalSum += number;
+
+            if (number < minElement)
+            {
+                minElement = number;
+            }
+            else if (number > maxElement) 
+            {
+                maxElement = number;
+            }
+        }
+
+        long minSum = totalSum - maxElement;
+        long maxSum = totalSum - minElement;
+
+        Console.WriteLine($"{minSum} {maxSum}");
     }
 
 }
@@ -31,10 +48,9 @@ class Solution
 {
     public static void Main(string[] args)
     {
-        int n = Convert.ToInt32(Console.ReadLine().Trim());
 
         List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
 
-        Result.plusMinus(arr);
+        Result.miniMaxSum(arr);
     }
 }
