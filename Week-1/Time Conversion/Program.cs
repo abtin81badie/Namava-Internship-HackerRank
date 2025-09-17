@@ -16,35 +16,32 @@ class Result
 {
     public static string timeConversion(string s)
     {
-        string[] strings = s.Split(':');
-        bool flag = strings[2].Contains("AM");
+        string amPm = s.Substring(8, 2);
 
-        string hh = null;
-        string mm = null;
-        string ss = null;
+        int hours = int.Parse(s.Substring(0, 2));
 
-        if (flag)
+        if (amPm == "PM")
         {
-            ss = strings[2].Split('A')[0];
-            mm = strings[1];
-            hh = strings[0];
-            if (hh == "12")
+            if (hours != 12)
             {
-                hh = "00";
+                hours += 12;
             }
         }
+
         else 
         {
-            ss = strings[2].Split('P')[0];
-            mm = strings[1];
-            hh = strings[0];
-            if (hh != "12")
+            if (hours == 12)
             {
-                hh = (int.Parse(strings[0]) + 12).ToString();
+                hours = 0;
             }
         }
 
-        return $"{hh:D2}:{mm}:{ss}";
+        StringBuilder resultBuilder = new StringBuilder();
+
+        resultBuilder.Append(hours.ToString("D2"));
+        resultBuilder.Append(s.Substring(2,6));
+
+        return resultBuilder.ToString();
     }
 
 }
