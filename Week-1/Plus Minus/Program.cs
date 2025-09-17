@@ -16,20 +16,33 @@ class Result
 {
     public static void plusMinus(List<int> arr)
     {
-        int positive = 0;
-        int negative = 0;
-        int zero = 0;
+        int totalCount = arr.Count;
 
-        for (int i = 0; i < arr.Count; i++) 
+        int positiveCount = 0;
+        int negativeCount = 0;
+        int zeroCount = 0;
+
+        foreach (var number in arr) 
         {
-            if (arr[i] > 0) {  positive++;}
-            else if (arr[i] < 0) { negative++;} 
-            else { zero++; }
+            if (number < 0)
+            {
+                negativeCount++;
+            }
+            else if (number > 0)
+            {
+                positiveCount++;
+            }
+            else 
+            {
+                zeroCount++;
+            }
         }
 
-        Console.WriteLine(((double)positive / arr.Count).ToString("F6"));
-        Console.WriteLine(((double)negative / arr.Count).ToString("F6"));
-        Console.WriteLine(((double)zero / arr.Count).ToString("F6"));
+        double positiveRatio = (double)positiveCount / totalCount;
+        double negativeRatio = (double)negativeCount / totalCount;
+        double zeroRatio = (double)zeroCount / totalCount;
+
+        Console.WriteLine($"{positiveRatio:F6}\n{negativeRatio:F6}\n{zeroRatio:F6}");
     }
 
 }
