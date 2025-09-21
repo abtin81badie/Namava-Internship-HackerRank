@@ -16,32 +16,21 @@ class Result
 {
     public static string timeConversion(string s)
     {
-        string amPm = s.Substring(8, 2);
+        var meridiem = s.Substring(8, 2);
 
         int hours = int.Parse(s.Substring(0, 2));
 
-        if (amPm == "PM")
+        if (meridiem.Equals("PM") && hours != 12)
         {
-            if (hours != 12)
-            {
-                hours += 12;
-            }
+            hours += 12;
         }
 
-        else 
+        else if (meridiem.Equals("AM") && hours == 12)
         {
-            if (hours == 12)
-            {
-                hours = 0;
-            }
+            hours = 0;
         }
 
-        StringBuilder resultBuilder = new StringBuilder();
-
-        resultBuilder.Append(hours.ToString("D2"));
-        resultBuilder.Append(s.Substring(2,6));
-
-        return resultBuilder.ToString();
+        return $"{hours:D2}{s.Substring(2,6)}";
     }
 
 }
