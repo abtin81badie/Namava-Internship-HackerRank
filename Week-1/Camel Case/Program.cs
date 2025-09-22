@@ -15,39 +15,42 @@ class Solution
         return (parts[0], parts[1], parts[2]);
     }
 
-    private static Operation ParseOperation(string opStr) => opStr.ToUpper() switch
+    private static Operation ParseOperation(string opStr) => opStr switch
     {
         "S" => Operation.Split,
-        "C" => Operation.Combine
+        "C" => Operation.Combine,
+        _ => throw new InvalidOperationException("Invalid Operation Type."),
     };
 
-    private static IdentifierType ParseIdentifierType(string typeStr) => typeStr.ToUpper() switch
+    private static IdentifierType ParseIdentifierType(string typeStr) => typeStr switch
     {
         "M" => IdentifierType.Method,
         "C" => IdentifierType.Class,
         "V" => IdentifierType.Variable,
+        _ => throw new InvalidOperationException("Invalid Identifier Type."),
     };
 
     // Routes the request to the correct conversion methode.
-    private static string Process(Operation operation, IdentifierType type, string content) 
+    private static string Process(Operation operation, IdentifierType identifierType, string content)
     {
-        return operation switch 
-        { 
-            Operation.Split => SplitIdentifier(type, content),
-            Operation.Combine => CombineIdentifier(type, content)
+        return operation switch
+        {
+            Operation.Split => SplitIdentifier(identifierType, content),
+            Operation.Combine => CombineIdentifier(identifierType, content),
+            _ => throw new InvalidOperationException("Invalid  operation."),
         };
     }
-    
-    // Splitting Logic
+
     private static string SplitIdentifier(IdentifierType type, string input)
     {
-        string cleanInput = type == IdentifierType.Method ? input.Replace("()","") : input;
+        string cleanInput = type == IdentifierType.Method ? input.Replace("()", "") : input;
 
         string spaced = Regex.Replace(cleanInput, "(?<=[a-z])(?=[A-Z])", " ");
 
         return spaced.ToLower();
     }
 
+    // Old Implementaion
     private static string SplitIdntifierWithLoop(IdentifierType type, string input)
     {
         string cleanInput = type == IdentifierType.Method ? input.Replace("()", "") : input;
@@ -59,7 +62,7 @@ class Solution
         {
             if (char.IsUpper(cleanInput[i]))
             {
-                builder.Append(" ");
+                builder.Append(' ');
             }
             builder.Append(cleanInput[i]);
         }
@@ -68,51 +71,49 @@ class Solution
     }
 
 
-    // Combining Logic
-    private static string Capitalize(string input) 
+    private static string CapitalizeFirstLetter(string input)
     {
         return string.IsNullOrEmpty(input) ? input : char.ToUpper(input[0]) + input.Substring(1);
     }
 
     private static string CombineIdentifier(IdentifierType type, string input)
     {
-        string[] words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-
+        var words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         var transformedWords = words.Select((word, index) =>
         {
             if (type == IdentifierType.Class)
             {
-                return Capitalize(word);
+                return CapitalizeFirstLetter(word);
             }
             else
             {
-                return index == 0 ? word.ToLower() : Capitalize(word);
+                return index == 0 ? word.ToLower() : CapitalizeFirstLetter(word);
             }
         });
 
+        var combined = string.Concat(transformedWords);
 
+        var result = type == IdentifierType.Method ? $"{combined}()" : combined;
 
-        string combined = string.Concat(transformedWords);
-
-        return type == IdentifierType.Method ? $"{combined}()" : combined;
+        return result;
     }
 
+    // Old Implementaion 
     private static string CombineIdentifierWithLoop(IdentifierType type, string input)
     {
         string[] words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-   
+
         var builder = new StringBuilder();
 
         for (int i = 0; i < words.Length; i++)
         {
             string currentWord = words[i];
-            if (type == IdentifierType.Class) 
+            if (type == IdentifierType.Class)
             {
-                builder.Append(Capitalize(currentWord));
+                builder.Append(CapitalizeFirstLetter(currentWord));
             }
-            else 
+            else
             {
                 if (i == 0)
                 {
@@ -120,7 +121,7 @@ class Solution
                 }
                 else
                 {
-                    builder.Append(Capitalize(currentWord));
+                    builder.Append(CapitalizeFirstLetter(currentWord));
                 }
             }
         }
