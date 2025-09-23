@@ -15,29 +15,52 @@ using System.ComponentModel.DataAnnotations;
 
 class Result
 {
+    public static int divisibleSumPairsDictionarySolution(int n, int k, List<int> ar)
+    {
+        // Key: remainder, Value: count of numbers with that remainder.
+        var remainderCounts = new Dictionary<int, int>();   
+        int pairCount = 0;
+
+        foreach (var number in ar)
+        {
+            int remainder = number % k;
+            int complement = (k - remainder) % k;
+
+            if (remainderCounts.TryGetValue(complement, out int count))
+            {
+                pairCount += count;
+            }
+
+            remainderCounts.TryGetValue(remainder, out int currentCount);
+            remainderCounts[remainder] = currentCount + 1;
+        }
+
+        return pairCount;
+    }
+
     public static int divisibleSumPairs(int n, int k, List<int> ar)
     {
         int[] remaindersCount = new int[k];
 
-        foreach (var number in ar) 
+        foreach (var number in ar)
         {
             int reamiainder = number % k;
             remaindersCount[reamiainder]++;
         }
 
-        int pairCount = 0;
+        
 
         // Case 1: Pairs of numbers with remainder 0.
         int zeroRemainderCount = remaindersCount[0];
-        pairCount += (zeroRemainderCount * (zeroRemainderCount - 1)) / 2;
+        int pairCount = (zeroRemainderCount * (zeroRemainderCount - 1)) / 2;
 
         // Case 2: Pairs of number with complementary numbers.
-        for (int i = 1; i <= k / 2; i++) 
+        for (int i = 1; i <= k / 2; i++)
         {
             if (i != k - i)
             {
                 pairCount += remaindersCount[i] * remaindersCount[k - i];
-            } 
+            }
             else
             {
                 // 'i' is its own complement.
