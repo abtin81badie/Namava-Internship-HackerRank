@@ -31,11 +31,11 @@ class Result
         }
 
         List<int> result = new List<int>();
-        foreach (string q in queries) 
+        foreach (string query in queries) 
         {
-            if (stringsFreq.ContainsKey(q))
+            if (stringsFreq.ContainsKey(query))
             {
-                result.Add(stringsFreq[q]);
+                result.Add(stringsFreq[query]);
             }
             else 
             {
