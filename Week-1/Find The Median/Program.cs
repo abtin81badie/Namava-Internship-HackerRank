@@ -19,20 +19,8 @@ class Result
     public static int findMedian(List<int> arr)
     {
         arr.Sort();
-        int numberOfElements = arr.Count;
-        int index = 0;
 
-        if (numberOfElements % 2 == 0)
-        {
-            index = numberOfElements / 2 - 1; 
-        }
-        else
-        {
-            index = (numberOfElements / 2);
-        }
-
-       return arr[index];
-
+       return arr[arr.Count / 2];
     }
 
 }
