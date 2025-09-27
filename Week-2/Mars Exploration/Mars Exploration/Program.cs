@@ -14,51 +14,41 @@ using System;
 
 class Result
 {
-    private static int countSosDeviations(string message)
+    private static void checkConstraints(string s)
     {
-        const string sos = "SOS";
-
-        int differenceCount = 0;
-
-        // 'S'
-        if (message[0] != sos[0])
+        if (s.Length < 1 || s.Length > 99)
         {
-            differenceCount++;
+            throw new ArgumentException("String must between 1 and 99.");
         }
 
-        // 'O'
-        if (message[1] != sos[1])
+        if (s.Length % 3 != 0)
         {
-            differenceCount++;
+            throw new ArgumentException("Sting must be multiple of 3.");  
         }
 
-        // 'S'
-        if (message[2] != sos[2])
+        if (s.Any(c => c < 'A' || c > 'Z'))
         {
-            differenceCount++;
+            throw new ArgumentException("String must contain only uppercase English letters [A-Z].");
         }
 
-        return differenceCount;
     }
 
     public static int marsExploration(string s)
     {
-        int stringLength = s.Length;
-        string SosBuffer = "";
-        int changedLettersNumber = 0;
+        checkConstraints(s);
 
-        for (int i = 0; i < stringLength; i++) 
+        const string expecteedPattern = "SOS";
+        int changedLettersCount = 0;
+
+        for (int i = 0; i < s.Length; i++)
         {
-            SosBuffer += s[i];
-            if (i%3 == 2)
+            if (s[i] != expecteedPattern[i % 3])
             {
-                changedLettersNumber += countSosDeviations(SosBuffer); 
-                SosBuffer = "";
+                changedLettersCount++;
             }
         }
-
-        return changedLettersNumber;
-
+        
+        return changedLettersCount;
     }
 
 }
