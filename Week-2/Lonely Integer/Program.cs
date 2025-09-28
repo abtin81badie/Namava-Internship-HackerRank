@@ -14,6 +14,34 @@ using System;
 
 class Result
 {
+    public static int lonelyintegerDictionarySolution(List<int> a)
+    {
+        // key: intiger Value: frequency
+        Dictionary<int, int> numberCounts = new Dictionary<int, int>();
+
+        foreach (var number in a) 
+        {
+            if (numberCounts.ContainsKey(number))
+            {
+                numberCounts[number]++;
+            } 
+            else
+            {
+                numberCounts.Add(number, 1);
+            }
+        }
+
+        foreach (var entry in numberCounts)
+        {
+            if (entry.Value == 1)
+            {
+                return entry.Key;
+            }
+        }
+
+        throw new InvalidOperationException("No lonely integer found.");
+    }
+
     public static int lonelyinteger(List<int> a)
     {
         var uniqueNumbers = a.GroupBy(n => n)
