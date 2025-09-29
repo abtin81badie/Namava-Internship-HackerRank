@@ -25,27 +25,53 @@ class Result
      *  3. INTEGER_ARRAY B
      */
 
-    public static string twoArrays(int k, List<int> A, List<int> B)
+    private static void checkConstraints(int n, int k, List<int> A, List<int> B)
     {
-        List<int> AComplement = new List<int>();
-
-        foreach (var number in A)
+        if (n < 1 || n > 1000)
         {
-            AComplement.Add(k - number);
+            throw new ArgumentException("n must be between 1 to 1000.");
         }
 
-        AComplement.Sort();
-        B.Sort();
-
-        for (int i = 0; i < B.Count; i++) 
+        if (k < 1 || k > 1_000_000_000)
         {
-            if (AComplement[i] > B[i])
+            throw new ArgumentOutOfRangeException("k must be between 1 and 10^9.");
+        }
+
+        if (A.Count != n || B.Count != n)
+        {
+            throw new ArgumentException($"Both lists A and B must have a size of n ({n}).");
+        }
+
+        if (A.Any(val => val < 0 || val > 1_000_000_000))
+        {
+            throw new ArgumentOutOfRangeException(nameof(A), "All elements in list A must be between 0 and 10^9.");
+        }
+
+        if (B.Any(val => val < 0 || val > 1_000_000_000))
+        {
+            throw new ArgumentOutOfRangeException(nameof(B), "All elements in list B must be between 0 and 10^9.");
+        }
+    }
+
+    public static string twoArrays(int k, List<int> A, List<int> B)
+    {
+        checkConstraints(A.Count, k, A, B);
+
+        A.Sort();
+
+        B.Sort();
+        B.Reverse();
+
+        for (int i = 0; i < A.Count; i++)
+        {
+            if (A[i] + B[i] < k)
             {
                 return "NO";
             }
         }
 
         return "YES";
+
     }
 
 }
