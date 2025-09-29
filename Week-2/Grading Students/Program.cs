@@ -16,20 +16,16 @@ class Result
 {
     private static int GetFinalGrade(int grade) 
     {
-        if (grade < 38)
+        if (grade >= 38)
         {
-            return grade;
+            int nextMultipleOfFive = ((grade / 5) + 1) * 5;
+            if ((nextMultipleOfFive - grade) < 3)
+                return nextMultipleOfFive;
         }
 
-        int nextMultipleOfFive = ((grade / 5) + 1) * 5;
-        
-        if ((nextMultipleOfFive - grade) < 3)
-        {
-            return nextMultipleOfFive;
-        }
-        
         return grade;
     }
+    
     public static List<int> gradingStudents(List<int> grades)
     {
         var finalGrades = grades.Select(GetFinalGrade).ToList();
