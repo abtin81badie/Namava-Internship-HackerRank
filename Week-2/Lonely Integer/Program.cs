@@ -14,6 +14,25 @@ using System;
 
 class Result
 {
+    public static int lonelyintegerHashSet(List<int> a)
+    {
+        HashSet<int> uniquElement = new HashSet<int>();
+
+        foreach (int element in a) 
+        {
+            if (uniquElement.Contains(element))
+            {
+                uniquElement.Remove(element);
+            }
+            else
+            {
+                uniquElement.Add(element);
+            }
+        }
+
+        return uniquElement.First();
+    }
+
     public static int lonelyintegerDictionarySolution(List<int> a)
     {
         // key: intiger Value: frequency
