@@ -14,32 +14,28 @@ using System;
 
 class Result
 {
+    private static int GetFinalGrade(int grade) 
+    {
+        if (grade < 38)
+        {
+            return grade;
+        }
+
+        int nextMultipleOfFive = ((grade / 5) + 1) * 5;
+        
+        if ((nextMultipleOfFive - grade) < 3)
+        {
+            return nextMultipleOfFive;
+        }
+        
+        return grade;
+    }
     public static List<int> gradingStudents(List<int> grades)
     {
-        var roundedGradesQuery = grades.Select(grade =>
-        {
-            int finalGrade = grade;
-
-            if (grade >= 38)
-            {
-                int nextMultipleOfFive = ((grade / 5) + 1) * 5;
-                int difference = (nextMultipleOfFive - grade);
-
-                if (difference < 3)
-                {
-                    finalGrade = nextMultipleOfFive;
-                }
-
-            }
-
-            return finalGrade;
-        });
-
-        List<int> finalGrades = roundedGradesQuery.ToList();
+        var finalGrades = grades.Select(GetFinalGrade).ToList();
         
         return finalGrades;
     }
-
 }
 
 class Solution
