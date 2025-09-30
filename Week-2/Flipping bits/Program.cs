@@ -14,16 +14,16 @@ using System;
 
 class Result
 {
-    private static long SolveByXorOperator(long n)
+    private static long FlipBitsyByXorOperator(long n)
     {
         return n ^ uint.MaxValue;
     }
-    private static long solveByBitWiseOperator(long n)
+    private static long FlipBitsyByBitWiseOperator(long n)
     {
         return (uint) ~n;
     }
 
-    private static long solveByManualConversion(long n)
+    private static long FlipBitsyByManualConversion(long n)
     {
         string binaryString = Convert.ToString(n, 2).PadLeft(32, '0');
    
@@ -39,11 +39,11 @@ class Result
     public static long flippingBits(long n)
     {
 
-        // return solveByManualConversion(n);
+        // return FlipBitsyByManualConversion(n);
 
-        // return solveByBitWiseOperator(n);   
+        // return FlipBitsyByBitWiseOperator(n);   
         
-        return SolveByXorOperator(n);
+        return FlipBitsyByXorOperator(n);
     }
 
 }
