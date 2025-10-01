@@ -20,12 +20,14 @@ class Result
         int matrixSize = arr.Count;
         int primaryDiagonalSum = 0;
         int secondaryDiagonalSum = 0;
+        
         int i = 0;
+        int lasIndex = matrixSize - 1;
 
         foreach (var row in arr)
         {
             primaryDiagonalSum += row[i];
-            secondaryDiagonalSum += arr[matrixSize - 1 - i][i];
+            secondaryDiagonalSum += row[lasIndex - i];
             i++;
         }
 
