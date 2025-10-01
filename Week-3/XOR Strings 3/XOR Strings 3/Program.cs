@@ -25,6 +25,7 @@ namespace Solution
                     result.Append('0');
                 else
                     result.Append('1');
+                i++;
             }
 
             return result.ToString();
