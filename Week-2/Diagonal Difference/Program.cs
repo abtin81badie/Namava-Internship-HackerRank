@@ -20,12 +20,20 @@ class Result
         int matrixSize = arr.Count;
         int primaryDiagonalSum = 0;
         int secondaryDiagonalSum = 0;
+        int i = 0;
 
-        for (int i = 0; i < matrixSize; i++)
+        foreach (var row in arr)
         {
-            primaryDiagonalSum += arr[i][i];
+            primaryDiagonalSum += row[i];
             secondaryDiagonalSum += arr[matrixSize - 1 - i][i];
+            i++;
         }
+
+        //for (int i = 0; i < matrixSize; i++)
+        //{
+        //    primaryDiagonalSum += arr[i][i];
+        //    secondaryDiagonalSum += arr[matrixSize - 1 - i][i];
+        //}
 
         int absoluteDifference = Math.Abs(primaryDiagonalSum - secondaryDiagonalSum);
 
