@@ -14,37 +14,29 @@ using System;
 
 class Result
 {
+    private const int MaxArraySize = 100;
     private static void CheckConstraint(int n, List<int> arr)
     {
-        if (n<100 || n>1000000 )
-        {
+        if (n < 100 || n > Math.Pow(10,6))
             throw new AggregateException("Constraint violated: n must be between 100 to 1000000");
-        }
 
         if (arr.Count != n)
-        {
-            throw new ArgumentException($"Constrainr violated: The number of elements in the list ({arr.Count}) does not match the provided size n ({n}).");
-        }
+            throw new ArgumentException($"Constraint violated: The number of elements in the list ({arr.Count}) does not match the provided size n ({n}).");
 
-        foreach (var item in arr) 
-        {
-            if (item < 0 || item > 99)
-            {
-                throw new ArgumentException($"Constraint violated: Array element {item} must be between 0 and 99.");  
-            }
-        }
+        if (arr.Any(item => item < 0 || item > 99))
+            throw new ArgumentException("Constraint violated: One or more array elements are outside the valid range of 0 to 99.");
 
     }
 
-    private static List<int> CreateSortedListFormFrequencies(int[] frequencyAraay) 
+    private static List<int> CreateSortedListFormFrequencies(int[] frequencyArray)
     {
         var sortedList = new List<int>();
 
-        for (int number = 0; number < frequencyAraay.Length; number++) 
+        for (int number = 0; number < frequencyArray.Length; number++)
         {
-            int count = frequencyAraay[number];
+            int count = frequencyArray[number];
 
-            while (count > 0) 
+            while (count > 0)
             {
                 sortedList.Add(number);
                 count--;
@@ -57,7 +49,7 @@ class Result
     public static List<int> countingSort(List<int> arr)
     {
         CheckConstraint(arr.Count, arr);
-        var frequencyArray = new int[100];
+        var frequencyArray = new int[MaxArraySize];
 
         foreach (var number in arr)
         {
