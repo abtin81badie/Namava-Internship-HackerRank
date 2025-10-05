@@ -16,58 +16,43 @@ class Result
 {
     private static void checkConstraints(int steps, string path)
     {
-        if (steps < 0 || steps > 1000000) 
-        {
+        if (steps < 0 || steps > Math.Pow(10, 6))
             throw new ArgumentOutOfRangeException("Invalid steps input.");
-        }
 
         if (path is null)
-        {
             throw new ArgumentNullException("path");
-        }
 
         if (path.Length != steps)
-        {
             throw new ArgumentException("The length of the path is not equal to number of steps.");
-        }
 
-        foreach (char step in path)
-        {
-            if (step != 'U' && step != 'D')
-            {
-                throw new ArgumentException($"Invalid character '{step}' found in path. Only 'U' and 'D' are allowed.", nameof(path));
-            }
-        }
+        var invalidChar = path.FirstOrDefault(step => step != 'U' && step != 'D');
+
+        if (invalidChar != default(char))
+            throw new ArgumentException($"Invalid character '{invalidChar}' found in path. Only 'U' and 'D' are allowed.", nameof(path));
     }
 
     public static int countingValleys(int steps, string path)
     {
+        checkConstraints(steps, path);
+
         int altitude = 0;
         int valleysCount = 0;
 
-        checkConstraints(steps, path);
-
-        foreach (var c in path)
+        foreach (var chracter in path)
         {
             bool wasInValley = altitude < 0;
 
-            switch (c)
+            if (chracter == 'U')
             {
-                case 'U':
-                    altitude++;
+                altitude++;
 
-                    if (wasInValley && altitude == 0)
-                    {
-                        valleysCount++;
-                    }
-
-                    break;
-                case 'D':
-                    altitude--;
-                    break;
-                default:
-                    throw new ArgumentException("Invalid Char.");
+                if (wasInValley && altitude == 0)
+                    valleysCount++;
             }
+            else if (chracter == 'D')
+                altitude--;
+            else
+                throw new ArgumentException("Invalid Char.");
         }
 
         return valleysCount;
