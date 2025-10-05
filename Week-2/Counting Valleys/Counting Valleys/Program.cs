@@ -25,10 +25,8 @@ class Result
         if (path.Length != steps)
             throw new ArgumentException("The length of the path is not equal to number of steps.");
 
-        var invalidChar = path.FirstOrDefault(step => step != 'U' && step != 'D');
-
-        if (invalidChar != default(char))
-            throw new ArgumentException($"Invalid character '{invalidChar}' found in path. Only 'U' and 'D' are allowed.", nameof(path));
+        if (path.Any(step => step != 'U' && step != 'D'))
+            throw new ArgumentException("Invalid character found in path. Only 'U' and 'D' are allowed.", nameof(path));
     }
 
     public static int countingValleys(int steps, string path)
@@ -51,8 +49,6 @@ class Result
             }
             else if (chracter == 'D')
                 altitude--;
-            else
-                throw new ArgumentException("Invalid Char.");
         }
 
         return valleysCount;
