@@ -14,7 +14,7 @@ using System;
 
 class Result
 {
-    private static void checkConstraints(int steps, string path)
+    private static void CheckConstraints(int steps, string path)
     {
         if (steps < 0 || steps > Math.Pow(10, 6))
             throw new ArgumentOutOfRangeException("Invalid steps input.");
@@ -29,9 +29,9 @@ class Result
             throw new ArgumentException("Invalid character found in path. Only 'U' and 'D' are allowed.", nameof(path));
     }
 
-    public static int countingValleys(int steps, string path)
+    public static int CountingValleys(int steps, string path)
     {
-        checkConstraints(steps, path);
+        CheckConstraints(steps, path);
 
         int altitude = 0;
         int valleysCount = 0;
@@ -67,7 +67,7 @@ class Solution
 
         string path = Console.ReadLine();
 
-        int result = Result.countingValleys(steps, path);
+        int result = Result.CountingValleys(steps, path);
 
         Console.WriteLine(result);
         //textWriter.WriteLine(result);
