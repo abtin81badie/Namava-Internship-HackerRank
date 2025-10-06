@@ -1,91 +1,73 @@
-﻿using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
-using System.Text;
-using System;
+﻿using System.Reflection.Metadata;
 
 class Result
 {
-    private static void checkConstraints(string s)
+    private const int NumberOfEnglishAlphabets = 26;
+    private static void CheckConstraints(string s)
     {
         if (string.IsNullOrEmpty(s) || s.Length > 1000)
-        {
             throw new ArgumentException("String cannot be null, empty, or longer that 1000 characters.");
-        }
 
-        foreach (char c in s) 
-        {
-            if (!char.IsLetter(c) && c != ' ')
-            {
-                throw new ArgumentException("Only letters and spaces are allowed.");
-            }
-        }
+        if (s.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)))
+            throw new ArgumentException("Only letters and spaces are allowed.");
     }
 
     // Solution 4
-    public static string pangramsWithLINQ(string s) 
+    public static string PangramsWithLINQ(string s)
     {
-        var uniquLettersCount = s.ToLower()
+        var uniqueLettersCount = s.ToLower()
             .Where(char.IsLetter)
             .Distinct().Count();
 
-        return uniquLettersCount == 26 ? "pangram" : "not pangram";
+        var result = uniqueLettersCount == NumberOfEnglishAlphabets ? "pangram" : "not pangram";
+
+        return result;
     }
 
     // Solution 3
-    public static string pangramsWithContain(string s)
+    public static string PangramsWithContain(string s)
     {
-        string lowerInput = s.ToLower();
-        string alphabets = "abcdefgijklmnopqrstuvwxyz";
+        var lowerInput = s.ToLower();
+        var alphabets = "abcdefgijklmnopqrstuvwxyz";
 
-        foreach (char alphabat in alphabets) 
+        foreach (var alphabat in alphabets)
         {
             if (!lowerInput.Contains(alphabat))
-            {
                 return "not pangram";
-            }
         }
-            
+
         return "pangram";
     }
 
     // Solution 2
-    public static string pangramsHashSolution (string s) 
+    public static string PangramsHashSolution(string s)
     {
-        var distincLetter = new HashSet<char>(s.ToLower().Where(char.IsLetter));
+        var distinctLetter = new HashSet<char>(s.ToLower().Where(char.IsLetter));
 
-        return distincLetter.Count == 26 ? "pangram" : "not pangram"; 
+        var result = distinctLetter.Count == NumberOfEnglishAlphabets ? "pangram" : "not pangram";
+
+        return result;
     }
 
     // Solution 1
-    public static string pangrams(string s)
+    public static string Pangrams(string s)
     {
-        checkConstraints(s);
+        CheckConstraints(s);
 
-        bool[] alphabetFound = new bool[26];
-        int found = 0;
+        var alphabetFound = new bool[26];
 
-        foreach (char c in s.ToLower())
+        foreach (var character in s.ToLower())
         {
-            int index = c - 'a';
+            int index = character - 'a';
             if (index >= 0 && index <= 25)
-            {
                 alphabetFound[index] = true;
-            }
         }
 
-        bool isPangram = alphabetFound.Count(found => found) == 26;
+        bool isPangram = alphabetFound.Count(found => found) == NumberOfEnglishAlphabets;
 
-        return isPangram ? "pangram" : "not pangram";
+        var result = isPangram ? "pangram" : "not pangram";
 
+        return result;
     }
 }
 
@@ -97,7 +79,7 @@ class Solution
 
         string s = Console.ReadLine();
 
-        string result = Result.pangrams(s);
+        string result = Result.Pangrams(s);
 
         Console.WriteLine(result);
 
