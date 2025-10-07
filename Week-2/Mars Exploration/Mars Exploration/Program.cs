@@ -14,40 +14,32 @@ using System;
 
 class Result
 {
-    private static void checkConstraints(string s)
+    private static void CheckConstraints(string s)
     {
         if (s.Length < 1 || s.Length > 99)
-        {
             throw new ArgumentException("String must between 1 and 99.");
-        }
 
         if (s.Length % 3 != 0)
-        {
-            throw new ArgumentException("Sting must be multiple of 3.");  
-        }
+            throw new ArgumentException("Sting must be multiple of 3.");
 
         if (s.Any(c => c < 'A' || c > 'Z'))
-        {
             throw new ArgumentException("String must contain only uppercase English letters [A-Z].");
-        }
 
     }
 
-    public static int marsExploration(string s)
+    public static int MarsExploration(string s)
     {
-        checkConstraints(s);
+        CheckConstraints(s);
 
-        const string expecteedPattern = "SOS";
+        const string expectedPattern = "SOS";
         int changedLettersCount = 0;
 
         for (int i = 0; i < s.Length; i++)
         {
-            if (s[i] != expecteedPattern[i % 3])
-            {
+            if (s[i] != expectedPattern[i % 3])
                 changedLettersCount++;
-            }
         }
-        
+
         return changedLettersCount;
     }
 
@@ -61,7 +53,7 @@ class Solution
 
         string s = Console.ReadLine();
 
-        int result = Result.marsExploration(s);
+        int result = Result.MarsExploration(s);
 
         Console.WriteLine(result);
 
