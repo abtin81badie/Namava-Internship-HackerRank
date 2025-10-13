@@ -59,8 +59,10 @@ class Result
 
         A.Sort();
 
-        B.Sort();
-        B.Reverse();
+        //B.Sort();
+        //B.Reverse();
+
+        B = B.OrderByDescending(x => x).ToList();
 
         for (int i = 0; i < A.Count; i++)
         {
