@@ -16,7 +16,7 @@ class Result
 {
 
     /*
-     * Complete the 'birthday' function below.
+     * Complete the 'Birthday' function below.
      *
      * The function is expected to return an INTEGER.
      * The function accepts following parameters:
@@ -24,10 +24,27 @@ class Result
      *  2. INTEGER d
      *  3. INTEGER m
      */
-
-    public static int birthday(List<int> s, int d, int m)
+    public static int BirthdayLinq(List<int> s, int d, int m)
     {
         int waysToShare = 0;
+        int n = s.Count;
+
+        if (n < m)
+            return 0;
+
+        for (int i = 0; i <= n - m; i++) 
+        {
+            if (s.Skip(i).Take(m).Sum() == d)
+                waysToShare++;
+        }
+
+        return waysToShare;
+    }
+
+    public static int Birthday(List<int> s, int d, int m)
+    {
+        int waysToShare = 0;
+        int n = s.Count;
 
         int currentSum = s.GetRange(0, m).Sum();
         if (currentSum == d)
@@ -35,9 +52,10 @@ class Result
             waysToShare++;
         }
 
-        for (int i = m; i < s.Count; i++)
+        for (int i = m; i < n; i++)
         {
-            currentSum = currentSum - s[i - m] + s[i];
+            currentSum += s[i];
+            currentSum -= s[i - m];
 
             if (currentSum == d)
                 waysToShare++;
@@ -64,7 +82,7 @@ class Solution
 
         int m = Convert.ToInt32(firstMultipleInput[1]);
 
-        int result = Result.birthday(s, d, m);
+        int result = Result.Birthday(s, d, m);
 
         Console.WriteLine(result);
         //textWriter.WriteLine(result);
