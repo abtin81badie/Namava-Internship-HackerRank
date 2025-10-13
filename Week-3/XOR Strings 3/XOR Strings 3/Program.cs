@@ -8,24 +8,35 @@ namespace Solution
 {
     class Solution
     {
-        public static String strings_xor(String s, String t)
+        public static String StringsXorOperator(String s, String t)
+        {
+            var result = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                result.Append((s[i] - '0') ^ (t[i] - '0'));
+            }
+            return result.ToString();
+        }
+
+        public static String StringsXor(String s, String t)
         {
             return string.Concat(s.Zip(t, (c1, c2) => c1 == c2 ? '0' : '1'));
         }
 
-        public static String stringsXorStringBuilder(String s, String t)
+        public static String StringsXorStringBuilder(String s, String t)
         {
             var result = new StringBuilder();
 
-            int i = 0;
+            int index = 0;
 
             foreach (var c in s)
             {
-                if (c == t[i])
+                if (c == t[index])
                     result.Append('0');
                 else
                     result.Append('1');
-                i++;
+
+                index++;
             }
 
             return result.ToString();
@@ -37,7 +48,7 @@ namespace Solution
             var s = Console.ReadLine();
             var t = Console.ReadLine();
 
-            var xorResult = strings_xor(s, t);
+            var xorResult = StringsXor(s, t);
 
             Console.WriteLine(xorResult);
         }

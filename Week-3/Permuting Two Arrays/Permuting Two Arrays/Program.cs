@@ -16,7 +16,7 @@ class Result
 {
 
     /*
-     * Complete the 'twoArrays' function below.
+     * Complete the 'TwoArrays' function below.
      *
      * The function is expected to return a STRING.
      * The function accepts following parameters:
@@ -25,7 +25,7 @@ class Result
      *  3. INTEGER_ARRAY B
      */
 
-    private static void checkConstraints(int n, int k, List<int> A, List<int> B)
+    private static void CheckConstraints(int n, int k, List<int> A, List<int> B)
     {
         if (n < 1 || n > 1000)
         {
@@ -53,20 +53,17 @@ class Result
         }
     }
 
-    public static string twoArrays(int k, List<int> A, List<int> B)
+    public static string TwoArrays(int k, List<int> A, List<int> B)
     {
-        checkConstraints(A.Count, k, A, B);
+        CheckConstraints(A.Count, k, A, B);
 
         A.Sort();
 
-        //B.Sort();
-        //B.Reverse();
-
-        B = B.OrderByDescending(x => x).ToList();
+        var value = B.OrderByDescending(x => x).ToList();
 
         for (int i = 0; i < A.Count; i++)
         {
-            if (A[i] + B[i] < k)
+            if (A[i] + value[i] < k)
             {
                 return "NO";
             }
@@ -98,7 +95,7 @@ class Solution
 
             List<int> B = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(BTemp => Convert.ToInt32(BTemp)).ToList();
 
-            string result = Result.twoArrays(k, A, B);
+            string result = Result.TwoArrays(k, A, B);
 
             Console.WriteLine(result);  
             //textWriter.WriteLine(result);

@@ -27,14 +27,14 @@ class Result
     public static int BirthdayLinq(List<int> s, int d, int m)
     {
         int waysToShare = 0;
-        int n = s.Count;
 
-        if (n < m)
+        if (s.Count < m)
             return 0;
 
-        for (int i = 0; i <= n - m; i++) 
+        for (int i = 0; i <= s.Count - m; i++) 
         {
-            if (s.Skip(i).Take(m).Sum() == d)
+            int chunksSum = s.Skip(i).Take(m).Sum();
+            if (chunksSum == d)
                 waysToShare++;
         }
 
@@ -44,7 +44,6 @@ class Result
     public static int Birthday(List<int> s, int d, int m)
     {
         int waysToShare = 0;
-        int n = s.Count;
 
         int currentSum = s.GetRange(0, m).Sum();
         if (currentSum == d)
@@ -52,7 +51,7 @@ class Result
             waysToShare++;
         }
 
-        for (int i = m; i < n; i++)
+        for (int i = m; i < s.Count; i++)
         {
             currentSum += s[i];
             currentSum -= s[i - m];
