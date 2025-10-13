@@ -18,21 +18,12 @@ namespace Solution
             return result.ToString();
         }
 
-        public static string StringsXor(string s, string t)
+        public static string StringsXor(string firstString, string secondString)
         {
-            Func<char, char, char> characterXorLogic = (char1, char2) =>
-            {
-                if (char1 == char2)
-                    return '0';
-                else
-                    return '1';
-            };
+            var xorResult = firstString.Zip(secondString, (firstChar, secondChar) =>
+                firstChar == secondChar ? '0' : '1');
 
-            IEnumerable<char> xorResultSequence = s.Zip(t, characterXorLogic);
-
-            string finalResult = string.Concat(xorResultSequence);
-
-            return finalResult;
+            return string.Concat(xorResult);
         }
 
         public static String StringsXorStringBuilder(String s, String t)
