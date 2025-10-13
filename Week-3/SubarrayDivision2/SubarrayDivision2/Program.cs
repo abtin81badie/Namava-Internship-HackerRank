@@ -33,8 +33,8 @@ class Result
 
         for (int i = 0; i <= s.Count - m; i++) 
         {
-            int chunksSum = s.Skip(i).Take(m).Sum();
-            if (chunksSum == d)
+            int currentSegmentSum = s.Skip(i).Take(m).Sum();
+            if (currentSegmentSum == d)
                 waysToShare++;
         }
 

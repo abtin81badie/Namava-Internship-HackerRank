@@ -13,14 +13,26 @@ namespace Solution
             var result = new StringBuilder();
             for (int i = 0; i < s.Length; i++)
             {
-                result.Append((s[i] - '0') ^ (t[i] - '0'));
+                result.Append((s[i]) ^ (t[i]));
             }
             return result.ToString();
         }
 
-        public static String StringsXor(String s, String t)
+        public static string StringsXor(string s, string t)
         {
-            return string.Concat(s.Zip(t, (c1, c2) => c1 == c2 ? '0' : '1'));
+            Func<char, char, char> characterXorLogic = (char1, char2) =>
+            {
+                if (char1 == char2)
+                    return '0';
+                else
+                    return '1';
+            };
+
+            IEnumerable<char> xorResultSequence = s.Zip(t, characterXorLogic);
+
+            string finalResult = string.Concat(xorResultSequence);
+
+            return finalResult;
         }
 
         public static String StringsXorStringBuilder(String s, String t)
@@ -48,7 +60,7 @@ namespace Solution
             var s = Console.ReadLine();
             var t = Console.ReadLine();
 
-            var xorResult = StringsXor(s, t);
+            var xorResult = StringsXorOperator(s, t);
 
             Console.WriteLine(xorResult);
         }

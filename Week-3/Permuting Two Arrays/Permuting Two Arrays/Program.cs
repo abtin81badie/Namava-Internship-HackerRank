@@ -59,14 +59,12 @@ class Result
 
         A.Sort();
 
-        var value = B.OrderByDescending(x => x).ToList();
+        B = B.OrderByDescending(value => value).ToList();
 
         for (int i = 0; i < A.Count; i++)
         {
-            if (A[i] + value[i] < k)
-            {
+            if (A[i] + B[i] < k)
                 return "NO";
-            }
         }
 
         return "YES";
