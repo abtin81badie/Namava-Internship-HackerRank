@@ -16,14 +16,14 @@ class Result
 {
 
     /*
-     * Complete the 'sockMerchant' function below.
+     * Complete the 'SockMerchant' function below.
      *
      * The function is expected to return an INTEGER.
      * The function accepts following parameters:
      *  1. INTEGER n
      *  2. INTEGER_ARRAY ar
      */
-    private static void checkConstraint(int n, List<int> ar)
+    private static void CheckConstraint(int n, List<int> ar)
     {
         if (n < 1 || n > 100)
         {
@@ -59,20 +59,19 @@ class Result
             {
                 totalPairs++;
                 unpairedSocks.Remove(sockColor);
-                continue;
             }
-
-            unpairedSocks.Add(sockColor);
+            else
+                unpairedSocks.Add(sockColor);
         }
 
         return totalPairs;
     }
 
-    public static int sockMerchant(int n, List<int> ar)
+    public static int SockMerchant(int n, List<int> ar)
     {
         var sockCounts = new Dictionary<int, int>();
 
-        foreach (var sockColor in ar) 
+        foreach (var sockColor in ar)
         {
             if (sockCounts.ContainsKey(sockColor))
                 sockCounts[sockColor]++;
@@ -104,7 +103,7 @@ class Solution
 
         int result = Result.SockMerchantHashSet(n, ar);
 
-        Console.WriteLine(result);  
+        Console.WriteLine(result);
         //textWriter.WriteLine(result);
 
         //textWriter.Flush();
