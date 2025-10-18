@@ -35,12 +35,13 @@ class Result
         return b + c > a;
     }
 
-    public static List<int> maximumPerimeterTriangle(List<int> sticks)
+    public static List<int> MaximumPerimeterTriangle(List<int> sticks)
     {
         CheckConstraints(sticks);
 
-        sticks.Sort();
-        sticks.Reverse();
+        sticks = sticks
+            .OrderByDescending(stick => stick)
+            .ToList();  
 
         for (int i = 0; i < sticks.Count - 2; i++)
         {
@@ -69,7 +70,7 @@ class Solution
 
         List<int> sticks = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(sticksTemp => Convert.ToInt32(sticksTemp)).ToList();
 
-        List<int> result = Result.maximumPerimeterTriangle(sticks);
+        List<int> result = Result.MaximumPerimeterTriangle(sticks);
 
         Console.WriteLine(String.Join(" ", result));
         //textWriter.WriteLine(String.Join(" ", result));
