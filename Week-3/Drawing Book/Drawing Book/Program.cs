@@ -39,9 +39,9 @@ class Result
 
         int turnsFromFront = p / 2;
 
-        int totalSpreads = n / 2;
+        int totalTurns = n / 2;
 
-        int turnsFromBack = totalSpreads - turnsFromFront;
+        int turnsFromBack = totalTurns - turnsFromFront;
 
         int minimumTurns = Math.Min(turnsFromBack, turnsFromFront);
 
