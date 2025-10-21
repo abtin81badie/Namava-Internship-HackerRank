@@ -25,12 +25,13 @@ class Result
      *  1. INTEGER_ARRAY a
      *  2. INTEGER_ARRAY b
      */
+
     private static void CheckConstraints(List<int> a, List<int> b)
     {
         int n = a.Count;
         int m = b.Count;
 
-        if (n < 1 || n > 10 || m < 1 || m > 10)
+        if (a.Count < 1 || a.Count > 10 || b.Count < 1 || b.Count > 10)
             throw new Exception("Error: Array sizes must be between 1 and 10.");
 
         if (a.Any(element => element < 1 || element > 100))
@@ -38,6 +39,41 @@ class Result
 
         if (b.Any(element => element < 1 || element > 100))
             throw new Exception("Error: All elements in the second array must be between 1 and 100.");
+    }
+
+    // find GCD (Greatest Common Divisor) using Euclidean Algorithm
+    private static int Gcd(int a, int b)
+    {
+        while (b != 0)
+        {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    private static int Lcm(int a, int b)
+    {
+        return (a / Gcd(a, b)) * b;
+    }
+
+    public static int LcmGcdGetTotalX(List<int> a,List<int> b)
+    {
+        CheckConstraints(a, b);
+
+        int count = 0;
+
+        int lcmA = a.Aggregate(Lcm);
+        int gcdB = b.Aggregate(Gcd);
+
+        for (int i = lcmA; i <= gcdB; i += lcmA)
+        {
+            if (gcdB % i == 0)
+                count++;
+        }
+
+        return count;
     }
 
     public static int GetTotalX(List<int> a, List<int> b)
@@ -54,14 +90,15 @@ class Result
             bool isMultipleOfAllInA = a.All(element => i % element == 0);
             bool  isFactorOfAllInB = b.All(element => element % i == 0);
 
-            if (isMultipleOfAllInA & isFactorOfAllInB)
-                count++;
+            if (isMultipleOfAllInA && isFactorOfAllInB)
+                count++;    
         }
 
         return count;
     }
-
 }
+
+
 
 class Solution
 {
@@ -79,7 +116,7 @@ class Solution
 
         List<int> brr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(brrTemp => Convert.ToInt32(brrTemp)).ToList();
 
-        int total = Result.GetTotalX(arr, brr);
+        int total = Result.LcmGcdGetTotalX(arr, brr);
 
         Console.WriteLine(total);
         //textWriter.WriteLine(total);
