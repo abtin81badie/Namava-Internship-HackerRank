@@ -28,8 +28,6 @@ class Result
 
     private static void CheckConstraints(List<int> a, List<int> b)
     {
-        int n = a.Count;
-        int m = b.Count;
 
         if (a.Count < 1 || a.Count > 10 || b.Count < 1 || b.Count > 10)
             throw new Exception("Error: Array sizes must be between 1 and 10.");
