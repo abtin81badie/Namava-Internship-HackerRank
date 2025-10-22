@@ -14,21 +14,51 @@ using System;
 
 class Result
 {
-    public static void CheckConstraints(List<int> a)
-    {
-        if (a.Count < 2 || a.Count > 100)
-            throw new ArgumentOutOfRangeException(nameof(a), "Input array size must be between 2 and 100.");
-
-        if (a.Any(x => x <= 0 || x >= 100))
-            throw new ArgumentOutOfRangeException(nameof(a), $"Elements in the array must be between 1 and 99.");
-    }
-
     /*
      * Complete the 'PickingNumbers' function below.
      *
      * The function is expected to return an INTEGER.
      * The function accepts INTEGER_ARRAY a as parameter.
      */
+    public static void CheckConstraints(List<int> a)
+    {
+        if (a.Count < 2 || a.Count > 100)
+            throw new ArgumentOutOfRangeException(nameof(a), "Input array size must be between 2 and 100.");
+
+        if (a.Any(element => element <= 0 || element >= 100))
+            throw new ArgumentOutOfRangeException(nameof(a), $"Elements in the array must be between 1 and 99.");
+    }
+
+    public static int DictionaryPickingNumbers(List<int> a)
+    {
+        CheckConstraints(a);
+
+        Dictionary<int, int> frequency = new Dictionary<int, int>();
+
+        foreach (int number in a)
+        {
+            if (frequency.ContainsKey(number))
+                frequency[number]++;
+            else
+                frequency[number] = 1;
+        }
+
+        int maxLength = 0;
+
+        foreach (var key in frequency.Keys)
+        {
+            int currentLength = frequency[key];
+
+            if (frequency.ContainsKey(key + 1))
+                currentLength += frequency[key + 1];
+
+            if (currentLength > maxLength)
+                maxLength = currentLength;
+        }
+
+        return maxLength;
+    }
+
     public static int PickingNumbers(List<int> a)
     {
         CheckConstraints(a);
@@ -40,9 +70,21 @@ class Result
             frequency[number]++;
         }
 
-        return Enumerable.Range(0, 99)
-                         .Select(i => frequency[i] + frequency[i + 1])
-                         .Max();
+        int maxLength = 0;
+
+        foreach (var i in Enumerable.Range(0,99))
+        {
+            int currentLength = frequency[i] + frequency[i + 1];
+
+            if (currentLength > maxLength)
+                maxLength = currentLength;
+        }
+
+        return maxLength;
+
+        //return Enumerable.Range(0, 99)
+        //                 .Select(i => frequency[i] + frequency[i + 1])
+        //                 .Max();
     }
 }
 
