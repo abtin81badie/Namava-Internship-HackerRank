@@ -45,14 +45,14 @@ class Result
     {
         CheckConstraints(x1, v1, x2, v2);
 
-        if (x1 == x2)
-            return "YES";
-
-        if (v1 == v2)
-            return "NO";
-
         int deltaHorizontalPosition = x2 - x1;
         int deltaVelocity = v1 - v2;
+
+        if (deltaHorizontalPosition == 0)
+            return "YES";
+
+        if (deltaVelocity == 0)
+            return "NO";
 
         //if (deltaVelocity == 0)
         //    return deltaHorizontalPosition == 0 ? "YES" : "NO";
