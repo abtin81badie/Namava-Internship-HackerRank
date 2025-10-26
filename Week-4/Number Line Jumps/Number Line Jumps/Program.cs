@@ -29,15 +29,15 @@ class Result
     {
         if (x1 < 0 || x1 >= x2 || x2 > 10000)
             throw new ArgumentOutOfRangeException(nameof(x1),
-                "Constraint violated: 0 ≤ x1 < x2 ≤ 10000.");
+                "Constraint violated: 0 <= x1 < x2 <= 10000.");
 
         if (v1 < 1 || v1 > 10000)
             throw new ArgumentOutOfRangeException(nameof(v1),
-                "Constraint violated: 1 ≤ v1 ≤ 10000.");
+                "Constraint violated: 1 <= v1 <= 10000.");
 
         if (v2 < 1 || v2 > 10000)
             throw new ArgumentOutOfRangeException(nameof(v2),
-                "Constraint violated: 1 ≤ v2 ≤ 10000.");
+                "Constraint violated: 1 <= v2 <= 10000.");
     }
 
 
@@ -45,13 +45,19 @@ class Result
     {
         CheckConstraints(x1, v1, x2, v2);
 
-        int dx = x2 - x1;
-        int dv = v1 - v2;
+        if (x1 == x2)
+            return "YES";
 
-        if (dv == 0)
-            return dx == 0 ? "YES" : "NO";
+        if (v1 == v2)
+            return "NO";
 
-        bool meet = (dx % dv == 0) && (dx / dv >= 0);
+        int deltaHorizontalPosition = x2 - x1;
+        int deltaVelocity = v1 - v2;
+
+        //if (deltaVelocity == 0)
+        //    return deltaHorizontalPosition == 0 ? "YES" : "NO";
+
+        bool meet = (deltaHorizontalPosition % deltaVelocity == 0) && (deltaHorizontalPosition / deltaVelocity >= 0);
         string isPossible = meet ? "YES" : "NO";
         return isPossible;
     }
