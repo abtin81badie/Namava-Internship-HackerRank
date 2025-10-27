@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoBreakers", "TwoBreakers\TwoBreakers.csproj", "{BC3A94B2-1634-4F0B-884F-EDA0B83E16A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC3A94B2-1634-4F0B-884F-EDA0B83E16A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC3A94B2-1634-4F0B-884F-EDA0B83E16A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC3A94B2-1634-4F0B-884F-EDA0B83E16A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC3A94B2-1634-4F0B-884F-EDA0B83E16A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C29D978-4943-48FE-B65B-E10A1451A005}
+	EndGlobalSection
+EndGlobal
