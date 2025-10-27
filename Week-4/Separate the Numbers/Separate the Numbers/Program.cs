@@ -1,6 +1,7 @@
-﻿using System.CodeDom.Compiler;
-using System.Collections.Generic;
+﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -8,9 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
 using System.Text;
-using System;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 class Result
 {
@@ -34,22 +35,20 @@ class Result
 
     private static bool IsValidSequence(string originalString, string firstNumString)
     {
-        long prev;
-        if (!long.TryParse(firstNumString, out prev))
+        if (!long.TryParse(firstNumString, out long prev))
         {
             return false;
         }
 
-        StringBuilder genStr = new StringBuilder(firstNumString);
+        StringBuilder generatedString = new StringBuilder(firstNumString);
 
-        while (genStr.Length < originalString.Length)
+        while (generatedString.Length < originalString.Length)
         {
-            long next = prev + 1;
-            genStr.Append(next.ToString());
-            prev = next;
+            ++prev;
+            generatedString.Append(prev.ToString());
         }
 
-        return genStr.ToString() == originalString;
+        return generatedString.ToString() == originalString;
     }
 
     public static void SeparateNumbers(string s)
@@ -72,22 +71,18 @@ class Result
         //        firstNum)
         //);
 
-        string firstMatch = null;
         for (int length = 1; length <= s.Length / 2; length++)
         {
             string firstNumString = s.Substring(0, length);
 
-            if (IsValidSequence(s, firstNumString)) 
+            if (IsValidSequence(s, firstNumString))
             {
-                firstMatch = firstNumString;
-                break;
+                Console.WriteLine($"YES {firstNumString}");
+                return;
             }
         }
 
-        if (firstMatch != null)
-            Console.WriteLine($"YES {firstMatch}");
-        else
-            Console.WriteLine("NO");
+        Console.WriteLine("NO");
     }
 
 }
