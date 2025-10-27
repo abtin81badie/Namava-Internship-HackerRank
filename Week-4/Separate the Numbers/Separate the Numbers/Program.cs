@@ -34,7 +34,12 @@ class Result
 
     private static bool IsValidSequence(string originalString, string firstNumString)
     {
-        long prev = long.Parse(firstNumString);
+        long prev;
+        if (!long.TryParse(firstNumString, out prev))
+        {
+            return false;
+        }
+
         StringBuilder genStr = new StringBuilder(firstNumString);
 
         while (genStr.Length < originalString.Length)
@@ -57,17 +62,27 @@ class Result
             return;
         }
 
-        var possibleLengths = Enumerable.Range(1, s.Length / 2);
+        //var possibleLengths = Enumerable.Range(1, s.Length / 2);
 
-        var possibleFirstNumbers = possibleLengths.Select(i => s.Substring(0, i));
+        //var possibleFirstNumbers = possibleLengths.Select(i => s.Substring(0, i));
 
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-        string firstMatch = possibleFirstNumbers.FirstOrDefault(firstNum =>
-            IsValidSequence(
-                s,
-                firstNum)
-        );
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+        //string firstMatch = possibleFirstNumbers.FirstOrDefault(firstNum =>
+        //    IsValidSequence(
+        //        s,
+        //        firstNum)
+        //);
+
+        string firstMatch = null;
+        for (int length = 1; length <= s.Length / 2; length++)
+        {
+            string firstNumString = s.Substring(0, length);
+
+            if (IsValidSequence(s, firstNumString)) 
+            {
+                firstMatch = firstNumString;
+                break;
+            }
+        }
 
         if (firstMatch != null)
             Console.WriteLine($"YES {firstMatch}");
