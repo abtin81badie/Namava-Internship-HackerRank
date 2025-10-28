@@ -16,7 +16,7 @@ class Result
 {
 
     /*
-     * Complete the 'closestNumbers' function below.
+     * Complete the 'ClosestNumbers' function below.
      *
      * The function is expected to return an INTEGER_ARRAY.
      * The function accepts INTEGER_ARRAY arr as parameter.
@@ -26,20 +26,18 @@ class Result
         if (arr.Count < 2 || arr.Count > 2 * Math.Pow(10, 5))
             throw new ArgumentException($"Input array size (n={arr.Count}) violates constraint: 2 <= n <= 200000.");
 
-        if (arr.Any(x => x < - Math.Pow(10,7) || x > Math.Pow(10,7)))
+        if (arr.Any(x => x < -Math.Pow(10, 7) || x > Math.Pow(10, 7)))
             throw new ArgumentException($"Violates value constraint: -10000000 <= arr[i] <= 10000000.");
 
         var uniqueCheck = new HashSet<int>();
         foreach (int val in arr)
         {
             if (!uniqueCheck.Add(val))
-            {
                 throw new ArgumentException($"Input array contains duplicate element: {val}. All elements must be unique.");
-            }
         }
     }
 
-    public static List<int> closestNumbers(List<int> arr)
+    public static List<int> ClosestNumbers(List<int> arr)
     {
         CheckConstraints(arr);
 
@@ -53,15 +51,13 @@ class Result
         {
             int absoluteValue = currentElement - previousElement;
 
-            if (absoluteValue < minimumAbsoluteValue)
+            if (absoluteValue <= minimumAbsoluteValue)
             {
-                minimumAbsoluteValue = absoluteValue;
-                result.Clear();
-                result.Add(previousElement);
-                result.Add(currentElement);
-            }
-            else if (absoluteValue == minimumAbsoluteValue)
-            {
+                if (absoluteValue < minimumAbsoluteValue)
+                {
+                    minimumAbsoluteValue = absoluteValue;
+                    result.Clear();
+                }
                 result.Add(previousElement);
                 result.Add(currentElement);
             }
@@ -83,7 +79,7 @@ class Solution
 
         List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
 
-        List<int> result = Result.closestNumbers(arr);
+        List<int> result = Result.ClosestNumbers(arr);
 
         Console.WriteLine(string.Join(" ", result));
         //textWriter.WriteLine(String.Join(" ", result));
