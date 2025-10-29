@@ -36,11 +36,7 @@ class Result
     {
         CheckConstraints(n, m);
 
-        if (m == 1)
-            return 2;
-
-        bool nIsEven = n % 2 == 0;
-        if (nIsEven)
+        if (m == 1 || n % 2 == 0)
             return 2;
 
         return 1;
