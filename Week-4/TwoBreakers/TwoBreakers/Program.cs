@@ -42,6 +42,32 @@ class Result
         return 1;
     }
 
+    public static int TowerBreakersSimulation(int n, int m)
+    {
+        CheckConstraints(n, m);
+
+        if (m == 1)
+            return 2;
+
+        int towersLeft = n;
+        int currentPlayer = 1; 
+
+        while (towersLeft > 0)
+        {
+            towersLeft--; 
+
+            if (towersLeft == 0)
+                return currentPlayer;
+
+            if (currentPlayer == 1)
+                currentPlayer = 2;
+            else
+                currentPlayer = 1;
+        }
+
+        return 2;
+    }
+
 }
 
 class Solution
@@ -60,7 +86,7 @@ class Solution
 
             int m = Convert.ToInt32(firstMultipleInput[1]);
 
-            int result = Result.TowerBreakers(n, m);
+            int result = Result.TowerBreakersSimulation(n, m);
 
             Console.WriteLine(result);
         }
