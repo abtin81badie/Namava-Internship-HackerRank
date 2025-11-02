@@ -37,7 +37,7 @@ class Result
         if (s.Length != n)
             throw new ArgumentException($"String 's' length ({s.Length}) does not match provided length 'n' ({n}).");
 
-        if (s.Contains(" "))
+        if (s.Any(c => char.IsWhiteSpace(c)))
             throw new ArgumentException("String 's' must not contain spaces.");
 
         if (s.Any(c => c > 127))
