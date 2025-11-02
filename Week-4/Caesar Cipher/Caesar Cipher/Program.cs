@@ -56,13 +56,9 @@ class Result
             {
                 char baseChar = char.IsUpper(character) ? 'A' : 'a';
 
-                int offset = character - baseChar;
+                var shiftedLetter = (char)(baseChar + (character - baseChar + k) % 26);
 
-                int newOffset = (offset + k) % 26;
-
-                char newChar = (char)(baseChar + newOffset);
-
-                cipherText.Append(newChar);
+                cipherText.Append(shiftedLetter);
             }
             else
                 cipherText.Append(character);

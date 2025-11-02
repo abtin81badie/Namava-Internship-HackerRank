@@ -40,25 +40,15 @@ class Result
         arr.Sort();
         int minimumDifference = int.MaxValue;
 
-        int previousItem = 0;
-        bool isFirstItem = true;
-
-        foreach (int currentItem in arr)
+        for (int i = 1; i < arr.Count; i++)
         {
-            if (isFirstItem)
-            {
-                previousItem = currentItem;
-                isFirstItem = false;
-            }
-            else
-            {
-                int absoluteDifference = currentItem - previousItem;
+            int absoluteDifference = arr[i] - arr[i - 1];
 
-                if (absoluteDifference < minimumDifference)
-                    minimumDifference = absoluteDifference;
-
-                previousItem = currentItem;
-            }
+            if (absoluteDifference < minimumDifference)
+                minimumDifference = absoluteDifference;
+            
+            if (minimumDifference == 0)
+                break;
         }
 
         return minimumDifference;

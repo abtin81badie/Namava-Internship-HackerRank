@@ -59,10 +59,7 @@ class Result
             if (towersLeft == 0)
                 return currentPlayer;
 
-            if (currentPlayer == 1)
-                currentPlayer = 2;
-            else
-                currentPlayer = 1;
+            currentPlayer = currentPlayer == 1 ? 2 : 1;
         }
 
         return 2;
