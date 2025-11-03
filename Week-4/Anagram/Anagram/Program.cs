@@ -39,13 +39,13 @@ class Result
         if (s.Length % 2 != 0)
             return -1;
 
-        Dictionary<char, int> charCounts = new Dictionary<char, int>();
+        var charCounts = new Dictionary<char, int>();
 
-        int mid = s.Length / 2;
+        var mid = s.Length / 2;
 
-        int changesNeeded = 0;
+        var changesNeeded = 0;
 
-        for (int i = 0; i < mid; i++)
+        for (var i = 0; i < mid; i++)
         {
             if (charCounts.ContainsKey(s[i]))
                 charCounts[s[i]]++;
@@ -53,7 +53,7 @@ class Result
                 charCounts[s[i]] = 1;
         }
 
-        for (int i = mid; i < s.Length; i++)
+        for (var i = mid; i < s.Length; i++)
         {
             if (charCounts.ContainsKey(s[i]) && charCounts[s[i]] > 0)
                 charCounts[s[i]]--;
