@@ -43,24 +43,22 @@ class Result
 
         int mid = s.Length / 2;
 
-        for (int i = 0; i < s.Length; i++)
+        int changesNeeded = 0;
+
+        for (int i = 0; i < mid; i++)
         {
-            char c = s[i];
-
-            if (!charCounts.ContainsKey(c))
-                charCounts[c] = 0;
-
-            if (i < mid)
-                charCounts[c]++;
+            if (charCounts.ContainsKey(s[i]))
+                charCounts[s[i]]++;
             else
-                charCounts[c]--;
+                charCounts[s[i]] = 1;
         }
 
-        int changesNeeded = 0;
-        foreach (int count in charCounts.Values)
+        for (int i = mid; i < s.Length; i++)
         {
-            if (count > 0)
-                changesNeeded += count;
+            if (charCounts.ContainsKey(s[i]) && charCounts[s[i]] > 0)
+                charCounts[s[i]]--;
+            else
+                changesNeeded++;
         }
 
         return changesNeeded;
