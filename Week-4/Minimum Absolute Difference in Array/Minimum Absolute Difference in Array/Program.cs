@@ -23,11 +23,8 @@ class Result
      */
     private static void CheckConstraints(List<int> arr)
     {
-
-        int n = arr.Count;
-
         if (arr.Count < 2 || arr.Count > 100000)
-            throw new ArgumentException($"List size constraint violated. Expected 2 <= n <= 100,000, but got n = {n}.");
+            throw new ArgumentException($"List size constraint violated. Expected 2 <= n <= 100,000, but got n = {arr.Count}.");
 
         if (arr.Any(number => number < -Math.Pow(10, 9) || number > Math.Pow(10, 9)))
             throw new ArgumentException($"Value constraint violated. Expected -10^9 <= val <= 10^9.");
