@@ -41,17 +41,17 @@ class Result
 
         arr.Sort();
 
-        int result = int.MaxValue;
+        int minUnfairness = int.MaxValue;
 
         for (int i = 0; i <= arr.Count - k; i++)
         {
             int currentUnfairness = arr[i + k - 1] - arr[i];
 
-            if (result > currentUnfairness)
-                result = currentUnfairness;
+            if (minUnfairness > currentUnfairness)
+                minUnfairness = currentUnfairness;
         }
 
-        return result;
+        return minUnfairness;
     }
 
 }
