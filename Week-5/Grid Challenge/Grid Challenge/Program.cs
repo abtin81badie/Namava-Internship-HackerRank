@@ -25,8 +25,8 @@ class Result
     private static void CheckConstraints(List<string> grid)
     {
         if (grid.Count < 1 || grid.Count > 100)
-            throw new ArgumentOutOfRangeException(nameof(grid),
-                $"Number of rows n is out of range [1, 100].");
+            throw new ArgumentOutOfRangeException($"Number of rows n is out of range [1, 100].");
+
         foreach (var row in grid)
         {
             if (row.Any(c => c < 'a' || c > 'z'))
