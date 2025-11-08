@@ -46,11 +46,10 @@ class Result
     {
         CheckConstraints(n, queries);
 
-        var arr = new List<int>[n];
-        for (int i = 0; i < n; i++)
-        {
-            arr[i] = new List<int>();
-        }
+        var arr = Enumerable.Range(0, n)
+            .Select(_ => new List<int>())
+            .ToArray();
+
 
         int lastAnswer = 0;
 
@@ -58,21 +57,19 @@ class Result
 
         foreach (var query in queries)
         {
-            int queryType = query[0];
+            int queryType = query.First();
             int x = query[1];
-            int y = query[2];
+            int y = query.Last();
 
             int idx = (x ^ lastAnswer) % n;
 
             if (queryType == 1)
                 arr[idx].Add(y);
-            else if (queryType == 2)
+            else
             {
                 int size = arr[idx].Count;
 
-                int value = arr[idx][y % size];
-
-                lastAnswer = value;
+                lastAnswer = arr[idx][y % size];
 
                 answers.Add(lastAnswer);
             }
