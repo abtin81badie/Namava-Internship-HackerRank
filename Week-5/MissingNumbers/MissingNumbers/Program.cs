@@ -16,7 +16,7 @@ class Result
 {
 
     /*
-     * Complete the 'missingNumbers' function below.
+     * Complete the 'MissingNumbers' function below.
      *
      * The function is expected to return an INTEGER_ARRAY.
      * The function accepts following parameters:
@@ -43,7 +43,7 @@ class Result
 
     }
 
-    public static List<int> missingNumbers(List<int> arr, List<int> brr)
+    public static List<int> MissingNumbers(List<int> arr, List<int> brr)
     {
         CheckConstraints(arr, brr);
 
@@ -88,7 +88,7 @@ class Solution
 
         List<int> brr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(brrTemp => Convert.ToInt32(brrTemp)).ToList();
 
-        List<int> result = Result.missingNumbers(arr, brr);
+        List<int> result = Result.MissingNumbers(arr, brr);
 
         Console.WriteLine(String.Join(" ", result));
 
