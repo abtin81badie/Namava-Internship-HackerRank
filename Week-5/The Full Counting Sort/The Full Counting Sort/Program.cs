@@ -1,6 +1,7 @@
-﻿using System.CodeDom.Compiler;
-using System.Collections.Generic;
+﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -8,9 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 using System.Text;
-using System;
+using System.Text.RegularExpressions;
 
 class Result
 {
@@ -72,15 +73,18 @@ class Result
     {
         CheckConstraints(arr);
 
-        var indexValuesPairs = new IndexValuePair[arr.Count];
+        var indexValuesPairs = new List<IndexValuePair>();
+        var mid = arr.Count / 2;
 
         for (int i = 0; i < arr.Count; i++)
         {
-            int.TryParse(arr[i][0], out var key);
+            int.TryParse(arr[i][0], out var index);
+            var value = arr[i][1];
 
-            string value = (i < arr.Count / 2) ? "-" : arr[i][1];
-
-            indexValuesPairs[i] = new IndexValuePair(key, value);
+            if (i < mid)
+                indexValuesPairs.Add(new IndexValuePair(index, "-"));
+            else
+                indexValuesPairs.Add(new IndexValuePair(index, value));
         }
 
         var sortedValues = indexValuesPairs.OrderBy(pair => pair.Index)
