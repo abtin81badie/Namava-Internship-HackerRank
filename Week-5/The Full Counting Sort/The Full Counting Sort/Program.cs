@@ -60,19 +60,15 @@ class Result
     {
         CheckConstraints(arr);
 
-        for (int i = 0; i < arr.Count / 2; i ++)
-        {
-            arr[i][1] = "-";
-        }
-
-        var buckets = new List<string>[maxKey];
-        for (int i = 0; i < maxKey; i++)
-        {
-            buckets[i] = new List<string>();
-        }
+        var buckets = Enumerable.Range(0, maxKey)
+                            .Select(_ => new List<string>())
+                            .ToList();
 
         for (int i = 0; i < arr.Count; i++)
         {
+            if (i < arr.Count / 2)
+                arr[i][1] = "-";
+
             int.TryParse(arr[i][0], out var key);
             buckets[key].Add(arr[i][1]);
         }
