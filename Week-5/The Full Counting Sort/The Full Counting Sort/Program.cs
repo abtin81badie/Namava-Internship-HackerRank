@@ -66,11 +66,11 @@ class Result
 
         for (int i = 0; i < arr.Count; i++)
         {
-            if (i < arr.Count / 2)
-                arr[i][1] = "-";
-
             int.TryParse(arr[i][0], out var key);
-            buckets[key].Add(arr[i][1]);
+
+            string value = (i < arr.Count / 2) ? "-" : arr[i][1];
+
+            buckets[key].Add(value);
         }
 
         var output = string.Join(' ', buckets.SelectMany(bucket => bucket));
