@@ -16,7 +16,7 @@ class Result
 {
 
     /*
-     * Complete the 'countSort' function below.
+     * Complete the 'CountSort' function below.
      *
      * The function accepts 2D_STRING_ARRAY arr as parameter.
      */
@@ -56,7 +56,41 @@ class Result
 
     }
 
-    public static void countSort(List<List<string>> arr)
+    public class IndexValuePair
+    {
+        public int Index { get; private set; }
+        public string Value { get; private set; }
+        public IndexValuePair(int index, string value)
+        {
+            Index = index;
+            Value = value;
+        }
+
+    }
+
+    public static void CountSortV2(List<List<string>> arr)
+    {
+        CheckConstraints(arr);
+
+        var indexValuesPairs = new IndexValuePair[arr.Count];
+
+        for (int i = 0; i < arr.Count; i++)
+        {
+            int.TryParse(arr[i][0], out var key);
+
+            string value = (i < arr.Count / 2) ? "-" : arr[i][1];
+
+            indexValuesPairs[i] = new IndexValuePair(key, value);
+        }
+
+        var sortedValues = indexValuesPairs.OrderBy(pair => pair.Index)
+                                .Select(pair => pair.Value);
+
+        var output = string.Join(' ', sortedValues);
+        Console.WriteLine(output);
+    }
+
+    public static void CountSort(List<List<string>> arr)
     {
         CheckConstraints(arr);
 
@@ -93,6 +127,6 @@ class Solution
             arr.Add(Console.ReadLine().TrimEnd().Split(' ').ToList());
         }
 
-        Result.countSort(arr);
+        Result.CountSortV2(arr);
     }
 }
