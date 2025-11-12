@@ -27,13 +27,11 @@ class Result
         if (grid.Count < 1 || grid.Count > 100)
             throw new ArgumentOutOfRangeException($"Number of rows n is out of range [1, 100].");
 
-        foreach (var row in grid)
-        {
-            if (row.Any(c => c < 'a' || c > 'z'))
-                throw new ArgumentException(
-                    $"Row:'{row}' contains invalid characters. Only lowercase letters 'a'-'z' are allowed.");
-        }
 
+        if (grid.Select(row => row.Any(c => char.IsLower(c)))
+                .Any(result => result == false))
+            throw new ArgumentException(
+                "At least one row contains an invalid character. Only lowercase letters 'a'-'z' are allowed.");
     }
 
     public static string GridChallenge(List<string> grid)
