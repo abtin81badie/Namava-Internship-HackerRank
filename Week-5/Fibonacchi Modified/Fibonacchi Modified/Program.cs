@@ -28,13 +28,19 @@ class Result
     private static void CheckConstraints(int t1, int t2, int n)
     {
         if (t1 < 0 || t1 > 2)
-            throw new ArgumentException($"Input constraint violation: t1 must be between 0 and 2 (inclusive). Received: {t1}", nameof(t1));
+            throw new ArgumentException(
+                $"Input constraint violation: t1 must be between 0 and 2 (inclusive). Received: {t1}",
+                nameof(t1));
 
         if (t2 < 0 || t2 > 2)
-            throw new ArgumentException($"Input constraint violation: t2 must be between 0 and 2 (inclusive). Received: {t2}", nameof(t2));
+            throw new ArgumentException(
+                $"Input constraint violation: t2 must be between 0 and 2 (inclusive). Received: {t2}",
+                nameof(t2));
 
         if (n < 3 || n > 20)
-            throw new ArgumentException($"Input constraint violation: n must be between 3 and 20 (inclusive). Received: {n}", nameof(n));
+            throw new ArgumentException(
+                $"Input constraint violation: n must be between 3 and 20 (inclusive). Received: {n}",
+                nameof(n));
     }
 
     public static BigInteger FibonacciModified(int t1, int t2, int n)
