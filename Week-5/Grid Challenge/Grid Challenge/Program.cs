@@ -28,8 +28,7 @@ class Result
             throw new ArgumentOutOfRangeException($"Number of rows n is out of range [1, 100].");
 
 
-        if (grid.Select(row => row.Any(c => char.IsLower(c)))
-                .Any(result => result == false))
+        if (grid.Any(row => row.Any(c => !char.IsLower(c))))
             throw new ArgumentException(
                 "At least one row contains an invalid character. Only lowercase letters 'a'-'z' are allowed.");
     }
