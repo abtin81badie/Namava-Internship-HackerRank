@@ -47,9 +47,8 @@ class Result
         fibonacciModifiedArray[1] = (BigInteger)t2;
 
         for (int i = 2; i < n; i++)
-        {
-            fibonacciModifiedArray[i] = fibonacciModifiedArray[i - 2] + BigInteger.Pow(fibonacciModifiedArray[i - 1], 2);
-        }
+            fibonacciModifiedArray[i] = fibonacciModifiedArray[i - 2]
+                + BigInteger.Pow(fibonacciModifiedArray[i - 1], 2);
 
         return fibonacciModifiedArray[n - 1];
     }
