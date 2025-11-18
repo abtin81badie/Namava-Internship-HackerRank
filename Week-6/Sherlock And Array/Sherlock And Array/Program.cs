@@ -26,7 +26,7 @@ class Result
         if (arr.Count > Math.Pow(10, 5) || arr.Count < 1)
             throw new ArgumentOutOfRangeException(nameof(arr), "Array size 'n' is out of constraints.");
 
-        if (arr.Any(element => element > 2*Math.Pow(10,4) || element < 1))
+        if (arr.Any(element => element > 2*Math.Pow(10,4) || element < 0))
             throw new ArgumentOutOfRangeException(nameof(arr), "An element in 'arr' is out of constraints.");
     }
 
@@ -34,10 +34,12 @@ class Result
     {
         CheckConstraints(arr);
 
-        var totalSum = 0;
+        var totalSum = arr.Sum();
 
-        foreach (var val in arr)
-            totalSum += val;
+        // var totalSum
+
+        //foreach (var val in arr)
+        //    totalSum += val;
 
         var leftSum = 0;
 
