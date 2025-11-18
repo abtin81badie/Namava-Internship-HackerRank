@@ -43,6 +43,28 @@ class Result
                 nameof(n));
     }
 
+    public static BigInteger FibonacciModified2(int t1, int t2, int n)
+    {
+        CheckConstraints(t1, t2, n);
+
+        if (n == 1) return (BigInteger)t1;
+        if (n == 2) return (BigInteger)t2;
+
+        BigInteger term1 = (BigInteger)t1; 
+        BigInteger term2 = (BigInteger)t2; 
+        BigInteger currentTerm = BigInteger.Zero; 
+
+        for (int i = 3; i <= n; i++)
+        {
+            currentTerm = term1 + (term2 * term2);
+
+            term1 = term2;
+            term2 = currentTerm;
+        }
+
+        return term2;
+    }
+
     public static BigInteger FibonacciModified(int t1, int t2, int n)
     {
         CheckConstraints(t1, t2, n);
@@ -72,7 +94,7 @@ class Solution
 
         int n = Convert.ToInt32(firstMultipleInput[2]);
 
-        BigInteger result = Result.FibonacciModified(t1, t2, n);
+        BigInteger result = Result.FibonacciModified2(t1, t2, n);
 
         Console.WriteLine(result);
     }
