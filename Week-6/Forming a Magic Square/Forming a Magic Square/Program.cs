@@ -16,7 +16,7 @@ class Result
 {
 
     /*
-     * Complete the 'formingMagicSquare' function below.
+     * Complete the 'FormingMagicSquare' function below.
      *
      * The function is expected to return an INTEGER.
      * The function accepts 2D_INTEGER_ARRAY s as parameter.
@@ -39,7 +39,7 @@ class Result
         new[] {2, 7, 6, 9, 5, 1, 4, 3, 8}
     };
 
-    public static int formingMagicSquare(List<List<int>> s)
+    public static int FormingMagicSquare(List<List<int>> s)
     {
         CheckConstraints(s);
 
@@ -64,7 +64,7 @@ class Solution
             s.Add(Console.ReadLine().TrimEnd().Split(' ').ToList().Select(sTemp => Convert.ToInt32(sTemp)).ToList());
         }
 
-        int result = Result.formingMagicSquare(s);
+        int result = Result.FormingMagicSquare(s);
 
         Console.WriteLine(result);
     }
