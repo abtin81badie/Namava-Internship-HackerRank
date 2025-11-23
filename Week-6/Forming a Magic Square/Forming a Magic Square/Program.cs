@@ -23,7 +23,7 @@ class Result
      */
     private static void CheckConstraints(List<List<int>> s)
     {
-        if (s.SelectMany(row => row).Any(element => element > 9 || element < 1))
+        if (s.Any(row => row.Any(element => element > 9 || element < 1)))
             throw new ArgumentException("All elements in the matrix must be between 1 and 9 inclusive.", nameof(s));
     }
 
