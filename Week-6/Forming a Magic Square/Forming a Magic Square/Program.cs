@@ -27,6 +27,7 @@ class Result
             throw new ArgumentException("All elements in the matrix must be between 1 and 9 inclusive.", nameof(s));
     }
 
+    // First Solution
     private static readonly int[][] MagicSquares =
         {
         new[] {8, 1, 6, 3, 5, 7, 4, 9, 2},
@@ -51,6 +52,63 @@ class Result
         index) => Math.Abs(val - flatInput[index])).Sum());
     }
 
+    // Second Solution
+    private static int[] RotateClockwise(int[] square)
+    {
+        return new int[]
+        {
+            square[6], square[3], square[0],
+            square[7], square[4], square[1],
+            square[8], square[5], square[2]
+        };
+    }
+
+    private static int[] ReflectHorizontal(int[] square)
+    {
+        return new int[]
+        {
+            square[2], square[1], square[0],
+            square[5], square[4], square[3],
+            square[8], square[7], square[6]
+        };
+    }
+
+    private static List<int[]> GenerateAllMagicSquares()
+    {
+        int[] baseSquare = { 8, 1, 6, 3, 5, 7, 4, 9, 2 };
+
+        IEnumerable<int[]> GetRotations(int[] root)
+        {
+            var current = root;
+            for (int i = 0; i < 4; i++)
+            {
+                yield return current;
+                current = RotateClockwise(current);
+            }
+        }
+
+        var originalRotations = GetRotations(baseSquare);
+
+        var reflectedRotations = GetRotations(ReflectHorizontal(baseSquare));
+
+        return originalRotations.Concat(reflectedRotations).ToList();
+    }
+
+
+    public static int FormingMagicSquareGenerative(List<List<int>> s) 
+    {
+        CheckConstraints(s);
+
+        var flatInput = s.SelectMany(row => row).ToArray();
+
+        var allMagicSquares = GenerateAllMagicSquares();
+
+        return MagicSquares.Min(square =>
+        square.Select((
+        val,
+        index) => Math.Abs(val - flatInput[index])).Sum());
+    }
+
 }
 
 class Solution
@@ -64,7 +122,7 @@ class Solution
             s.Add(Console.ReadLine().TrimEnd().Split(' ').ToList().Select(sTemp => Convert.ToInt32(sTemp)).ToList());
         }
 
-        int result = Result.FormingMagicSquare(s);
+        int result = Result.FormingMagicSquareGenerative(s);
 
         Console.WriteLine(result);
     }
