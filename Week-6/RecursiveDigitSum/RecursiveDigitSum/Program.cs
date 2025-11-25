@@ -25,8 +25,8 @@ class Result
      */
     private static void CheckConstraints(string n, int k)
     {
-        if (n.Length > Math.Pow(10, 5) || n.Length < 1)
-            throw new ArgumentException($"Constraint violation: The length of 'n' must be between 1 and 10^5. Actual length: {n?.Length ?? 0}", nameof(n));
+        if (n.Length > Math.Pow(10, 100_000) || n.Length < 1)
+            throw new ArgumentException($"Constraint violation: The length of 'n' must be between 1 and 10^(10^5). Actual length: {n?.Length ?? 0}", nameof(n));
 
         if (k > Math.Pow(10, 5) || k < 1)
             throw new ArgumentException($"Constraint violation: 'k' must be between 1 and 10^5. Actual value: {k}", nameof(k));
@@ -37,7 +37,7 @@ class Result
         if (num < 10)
             return (int)num;
 
-        var sum = num.ToString().Sum(c => (long)(c - '0'));
+        var sum = num.ToString().Sum(c => (long)(char.GetNumericValue(c)));
 
         return CalculateRecursiveSuperDigit(sum);
     }
@@ -46,7 +46,7 @@ class Result
     {
         CheckConstraints(n, k);
 
-        var initialSum = n.Sum(c => (long)(c - '0'));
+        var initialSum = n.Sum(c => (long)(char.GetNumericValue(c)));
 
         var totalSum = initialSum * k;
 
