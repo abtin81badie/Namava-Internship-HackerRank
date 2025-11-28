@@ -27,7 +27,7 @@ class Result
             throw new ArgumentException("The value of 'n' must be a non-negative integer. It must be between 0 and 10^15.");
     }
 
-    public static long sumXor(long n)
+    public static long SumXor(long n)
     {
         CheckConstraints(n);
 
@@ -49,7 +49,7 @@ class Solution
     {
         long n = Convert.ToInt64(Console.ReadLine().Trim());
 
-        long result = Result.sumXor(n);
+        long result = Result.SumXor(n);
 
         Console.WriteLine(result);
     }
