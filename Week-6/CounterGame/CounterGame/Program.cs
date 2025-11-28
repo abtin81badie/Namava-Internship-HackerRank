@@ -61,6 +61,29 @@ class Result
         return (totalMoves % 2 == 0) ? "Richard" :  "Louise";
     }
 
+    // Solution 2 - Iterative Solution
+    public static string PlayIteratively(long n)
+    {
+        var currentN = n;
+        var moves = 0;
+
+        while (currentN > 1)
+        {
+            if ((currentN & (currentN - 1)) == 0)
+                currentN /= 2;
+            else
+            {
+                var nextLowerPower = GetLargestPowerOf2(currentN);
+
+                currentN -= nextLowerPower;
+            }
+
+            moves++;
+        }
+
+        return (moves % 2 == 0) ? "Richard" : "Louise";
+    }
+
 }
 
 class Solution
@@ -73,7 +96,7 @@ class Solution
         {
             long n = Convert.ToInt64(Console.ReadLine().Trim());
 
-            string result = Result.CounterGame(n);
+            string result = Result.PlayIteratively(n);
 
             Console.WriteLine(result);
         }
