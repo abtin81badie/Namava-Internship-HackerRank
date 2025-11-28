@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sum vs XOR", "Sum vs XOR\Sum vs XOR.csproj", "{52C9569F-B0EC-4B6F-860F-CE4681B6C492}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52C9569F-B0EC-4B6F-860F-CE4681B6C492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C9569F-B0EC-4B6F-860F-CE4681B6C492}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C9569F-B0EC-4B6F-860F-CE4681B6C492}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C9569F-B0EC-4B6F-860F-CE4681B6C492}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8CCB75E3-D39A-4F65-9290-AF7360FA2622}
+	EndGlobalSection
+EndGlobal
