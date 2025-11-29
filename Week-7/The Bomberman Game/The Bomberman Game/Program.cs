@@ -24,6 +24,17 @@ class Result
      *  1. INTEGER n
      *  2. STRING_ARRAY grid
      */
+    private static void CheckConstraints(int n, List<string> grid)
+    {
+        if (grid.Count < 1
+            || grid.Count > 200
+            || grid.Any(item => item.Length < 1 || item.Length > 200))
+            throw new ArgumentException("Grid dimensions (rows and column length) must be between 1 and 200.");
+
+        if (n < 1 || n > Math.Pow(10,9))
+            throw new ArgumentException("Value 'n' must be between 1 and 10^9.");
+    }
+
     public class ExplosionHelper()
     {
         private static bool IsBlown(List<string> currentGrid, int row, int col, int i, int j)
@@ -120,8 +131,10 @@ class Result
         }
     }
 
-    public static List<string> bomberMan(int n, List<string> grid)
+    public static List<string> BomberMan(int n, List<string> grid)
     {
+        CheckConstraints(n, grid);
+
         var context = new Context();
 
         if (n == 1)
@@ -158,7 +171,7 @@ class Solution
             grid.Add(gridItem);
         }
 
-        List<string> result = Result.bomberMan(n, grid);
+        List<string> result = Result.BomberMan(n, grid);
 
         Console.WriteLine(String.Join("\n", result));
     }
