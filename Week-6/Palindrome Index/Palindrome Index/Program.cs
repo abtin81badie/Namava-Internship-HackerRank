@@ -29,6 +29,10 @@ class Result
             throw new ArgumentException(
                 $"Input string length must be between 1 and 5 + 10^5 characters, inclusive. Current length is {s.Length}.",
                 nameof(s));
+
+        if (s.Any(c => !Char.IsLower(c)))
+            throw new ArgumentException("Input string must contain only lowercase English alphabet characters (a to z)"); 
+
     }
 
     private static bool IsPalindrome(string s, int start, int end)
@@ -48,34 +52,27 @@ class Result
     {
         CheckConstraints(s);
 
-        if (s.SequenceEqual(s.Reverse()))
-            return -1;
-
         var left = 0;
         var right = s.Length - 1;
 
-        while (left < right)
+        while (left < right && s[left] == s[right])
         {
-            if (s[left] == s[right])
-            {
-                left++;
-                right--;
-            }
-            else
-            {
-                if (IsPalindrome(s, left + 1, right))
-                    return left;
-
-                if (IsPalindrome(s, left, right - 1))
-                    return right;
-
-                break;
-            }
+            left++;
+            right--;
         }
+
+        if (left >= right)
+            return -1;
+
+        if (IsPalindrome(s, left + 1, right))
+            return left;
+
+        if (IsPalindrome(s, left, right - 1))
+            return right;
 
         return -1;
 
-    }
+    } 
 
 }
 
