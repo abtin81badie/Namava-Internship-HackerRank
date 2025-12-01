@@ -37,16 +37,6 @@ class Result
 
     public class ExplosionHelper()
     {
-        private static bool IsBlown(List<string> currentGrid, int row, int col, int i, int j)
-        {
-
-            return currentGrid[i][j] == 'O' ||
-                    (i > 0 && currentGrid[i - 1][j] == 'O') ||           // Up
-                    (i < row - 1 && currentGrid[i + 1][j] == 'O') ||     // Down
-                    (j > 0 && currentGrid[i][j - 1] == 'O') ||           // Left
-                    (j < col - 1 && currentGrid[i][j + 1] == 'O');       // Right
-        }
-
         public static List<string> Detonate(List<string> currentGrid, int row, int col)
         {
             List<string> nextGrid = new List<string>();
@@ -57,7 +47,13 @@ class Result
 
                 for (int j = 0; j < col; j++)
                 {
-                    rowChars.Append(IsBlown(currentGrid, row, col, i, j) ? '.' : 'O');
+                    bool isBlown = (currentGrid[i][j] == 'O') ||                      
+                                   (i > 0 && currentGrid[i - 1][j] == 'O') ||         // Up
+                                   (i < row - 1 && currentGrid[i + 1][j] == 'O') ||   // Down
+                                   (j > 0 && currentGrid[i][j - 1] == 'O') ||         // Left
+                                   (j < col - 1 && currentGrid[i][j + 1] == 'O');     // Right
+
+                    rowChars.Append(isBlown ? '.' : 'O');
                 }
 
                 nextGrid.Add(rowChars.ToString());
@@ -87,9 +83,12 @@ class Result
     {
         public List<string> Process(List<string> initialGrid, int row, int col)
         {
-            var fullGrid = Enumerable.Repeat(new string(
-                'O',
-                col), row).ToList();
+            var fullRow = new string('O',col);
+            var fullGrid = new List<string>(row);
+            
+            for (int i = 0; i < row;i++)
+                fullGrid.Add(fullRow);
+            
             return fullGrid;
         }
     }
