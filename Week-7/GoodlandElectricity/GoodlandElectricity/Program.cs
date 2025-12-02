@@ -64,20 +64,17 @@ class Result
         while (currentUncoveredIndex < arr.Count)
         {
             var bestReach = -1;
-            var foundSegment = false;
 
             while (segmentIndex < lineSegments.Count &&
                     lineSegments[segmentIndex].StartPoint <= currentUncoveredIndex)
             {
                 if (lineSegments[segmentIndex].EndPoint > bestReach)
-                {
                     bestReach = lineSegments[segmentIndex].EndPoint;
-                    foundSegment = true;
-                }
+
                 segmentIndex++;
             }
 
-            if (!foundSegment || bestReach < currentUncoveredIndex)
+            if (bestReach < currentUncoveredIndex)
                 return -1;
 
             pylonsCount++;
