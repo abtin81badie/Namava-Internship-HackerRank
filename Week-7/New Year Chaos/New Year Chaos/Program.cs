@@ -26,46 +26,50 @@ class Result
             throw new ArgumentException("Value does not fall within the expected range."); 
     }
 
+    private static void Swap(List<int> q, int a, int b)
+    {
+        int temp = q[a];
+        q[a] = q[b];
+        q[b] = temp;
+    }
+
+    public static void MinimumBribesBackwardsSolution(List<int> q)
+    {
+        CheckConstraints(q);
+
+        int bribes = 0;
+
+        for (int i = q.Count - 1; i >= 0; i--)
+        {
+            if (q[i] == i + 1)
+                continue;
+            if (i - 1 >= 0 && q[i - 1] == i + 1)
+            {
+                bribes++;
+                Swap(q, i, i - 1);
+            }
+            else if (i - 2 >= 0 && q[i - 2] == i + 1)
+            {
+                bribes += 2;
+
+                Swap(q, i - 2, i - 1);
+                Swap(q, i - 1, i);
+            }
+            else
+            {
+                Console.WriteLine("Too chaotic");
+                return;
+            }
+        }
+
+        Console.WriteLine(bribes);
+    }
+
     public static void MinimumBribes(List<int> q)
     {
         CheckConstraints(q);
 
         var bribes = 0;
-
-        // Iterate backwards from the end of the line
-        for (int i = q.Count - 1; i >= 0; i--)
-        {
-            // The value that *should* be at this position (1-based index)
-            int expected = i + 1;
-
-            // If the person currently at i is not the expected person
-            if (q[i] != expected)
-            {
-                // Check if the expected person is 1 spot ahead (at i-1)
-                if (i - 1 >= 0 && q[i - 1] == expected)
-                {
-                    bribes++;
-                    Swap(q, i, i - 1);
-                }
-                // Check if the expected person is 2 spots ahead (at i-2)
-                else if (i - 2 >= 0 && q[i - 2] == expected)
-                {
-                    bribes += 2;
-                    // Move the person from i-2 to i requires two swaps:
-                    // 1. Swap (i-2) with (i-1)
-                    // 2. Swap (i-1) with (i)
-                    Swap(q, i - 2, i - 1);
-                    Swap(q, i - 1, i);
-                }
-                // If the expected person is not found in the previous 2 spots,
-                // it means they moved more than 2 spots, which is impossible.
-                else
-                {
-                    Console.WriteLine("Too chaotic");
-                    return;
-                }
-            }
-        }
 
         for (int i = 0; i < q.Count; i++) 
         {
@@ -77,9 +81,14 @@ class Result
 
             var start = Math.Max(0, q[i] - 2);
 
-            bribes += q.Skip(start)
-                .Take(i - start)
-                .Count(val => val > q[i]);
+            // We only need to check from [q[i] - 2] up to [i]. 
+            // This is because if a number greater than q[i] is in front of it, 
+            // it must be within that small window because numbers can't move more than 2 spots forward.
+            for (int j = start; j < i; j++)
+            {
+                if (q[j] > q[i])
+                    bribes++;
+            }
         }
 
         Console.WriteLine(bribes);
@@ -99,7 +108,7 @@ class Solution
 
             List<int> q = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(qTemp => Convert.ToInt32(qTemp)).ToList();
 
-            Result.MinimumBribes(q);
+            Result.MinimumBribesBackwardsSolution(q);
         }
     }
 }
