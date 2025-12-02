@@ -23,6 +23,18 @@ class Result
      *  1. INTEGER k
      *  2. INTEGER_ARRAY arr
      */
+    private static void CheckConstraints(int k, List<int> arr)
+    {
+        if (arr.Any(element => !(element == 1 || element == 0)))
+            throw new ArgumentException("All elements in the list must be either 0 or 1.");
+
+        if (arr.Count < 1 || arr.Count > Math.Pow(10, 5))
+            throw new ArgumentException("List count must be between 1 and 10^5.");
+
+        if (k > arr.Count || k < 1)
+            throw new ArgumentException($"Value 'k' must be between 1 and the list count ({arr.Count}).");
+    }
+
     private struct LineSegment
     {
         public int StartPoint;
@@ -38,6 +50,8 @@ class Result
 
     public static int Pylons(int k, List<int> arr)
     {
+        CheckConstraints(k, arr);
+
         var lineSegments = new List<LineSegment>();
 
         for (int i = 0; i < arr.Count; i++)
