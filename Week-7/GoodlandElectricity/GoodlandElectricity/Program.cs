@@ -99,6 +99,39 @@ class Result
         return pylonsCount;
     }
 
+    // Second solution
+    public static int PylonGreedy(int k, List<int> arr)
+    {
+        CheckConstraints(k, arr);
+
+        var pylonsCount = 0;
+        var currentUncoveredIndex = 0;
+
+        while (currentUncoveredIndex < arr.Count)
+        {
+            var foundLoc = -1;
+            var searchEnd = Math.Min(arr.Count - 1, currentUncoveredIndex + k -1);
+            var searchStart = Math.Max(0, currentUncoveredIndex - k + 1);
+
+            for (var loc = searchEnd; loc >= searchStart; loc--)
+            {
+                if (arr[loc] == 1)
+                {
+                    foundLoc = loc;
+                    break;
+                }
+            }
+
+            if (foundLoc == -1)
+                return -1;
+
+            pylonsCount++;
+            currentUncoveredIndex = foundLoc + k;
+        }
+
+        return pylonsCount;
+    }
+
 }
 
 class Solution
@@ -114,7 +147,7 @@ class Solution
 
         List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
 
-        int result = Result.Pylons(k, arr);
+        int result = Result.PylonGreedy(k, arr);
 
         Console.WriteLine(result);
 
