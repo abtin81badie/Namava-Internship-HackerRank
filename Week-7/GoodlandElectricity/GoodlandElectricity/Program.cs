@@ -109,7 +109,7 @@ class Result
 
         while (currentUncoveredIndex < arr.Count)
         {
-            var foundLoc = -1;
+            var foundLocation = -1;
             var searchEnd = Math.Min(arr.Count - 1, currentUncoveredIndex + k -1);
             var searchStart = Math.Max(0, currentUncoveredIndex - k + 1);
 
@@ -117,16 +117,16 @@ class Result
             {
                 if (arr[loc] == 1)
                 {
-                    foundLoc = loc;
+                    foundLocation = loc;
                     break;
                 }
             }
 
-            if (foundLoc == -1)
+            if (foundLocation == -1)
                 return -1;
 
             pylonsCount++;
-            currentUncoveredIndex = foundLoc + k;
+            currentUncoveredIndex = foundLocation + k;
         }
 
         return pylonsCount;
