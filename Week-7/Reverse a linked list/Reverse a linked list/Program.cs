@@ -96,13 +96,15 @@ class Solution
             while(llist != null)
             {
                 if (llist.data < 1
-                    || llist.data > 1000)
+                    || llist.data > Math.Pow(10,3))
                     throw new ArgumentException($"List element {llist.data} is out of bounds. Elements must be between 1 and 1000.");
             }
         } 
 
         public static SinglyLinkedListNode Reverse(SinglyLinkedListNode llist)
         {
+            CheckConstraints(llist);
+
             SinglyLinkedListNode? previousNode = null;
             SinglyLinkedListNode currentNode = llist;
             SinglyLinkedListNode? nextNode = null;
