@@ -44,7 +44,7 @@ class Result
             throw new ArgumentException("Player scores are not in ascending order.");
     }
 
-    public static List<int> climbingLeaderboard(List<int> ranked, List<int> player)
+    public static List<int> ClimbingLeaderboard(List<int> ranked, List<int> player)
     {
         CheckConstraints(ranked, player);   
 
@@ -79,7 +79,7 @@ class Solution
 
         List<int> player = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(playerTemp => Convert.ToInt32(playerTemp)).ToList();
 
-        List<int> result = Result.climbingLeaderboard(ranked, player);
+        List<int> result = Result.ClimbingLeaderboard(ranked, player);
 
         Console.WriteLine(String.Join("\n", result));
     }
