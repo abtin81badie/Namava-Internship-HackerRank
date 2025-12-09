@@ -113,22 +113,21 @@ class Solution
             if (llist == null)
                 return null;
 
-            var temporaryNode = llist;
             var currentNode = llist;
+            DoublyLinkedListNode previousNode = null;
+            DoublyLinkedListNode nextNode = null;
 
             while (currentNode != null)
             {
-                temporaryNode = currentNode.prev;
-                currentNode.prev = currentNode.next;
-                currentNode.next = temporaryNode;
+                nextNode = currentNode.next;
+                currentNode.next = previousNode;
+                currentNode.prev = nextNode;
 
-                if (currentNode.prev != null)
-                    llist = currentNode.prev;
-
-                currentNode = currentNode.prev;
+                previousNode = currentNode;
+                currentNode = nextNode;
             }
 
-            return llist;
+            return previousNode;
         }
 
     }
