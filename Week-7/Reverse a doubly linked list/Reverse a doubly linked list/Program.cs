@@ -110,20 +110,23 @@ class Solution
         {
             CheckConstraints(llist);
 
-            DoublyLinkedListNode temporaryNode = null;
-            DoublyLinkedListNode currentNode = llist;
+            if (llist == null)
+                return null;
 
-            while (currentNode!=null)
+            var temporaryNode = llist;
+            var currentNode = llist;
+
+            while (currentNode != null)
             {
                 temporaryNode = currentNode.prev;
                 currentNode.prev = currentNode.next;
                 currentNode.next = temporaryNode;
 
+                if (currentNode.prev != null)
+                    llist = currentNode.prev;
+
                 currentNode = currentNode.prev;
             }
-
-            if (temporaryNode != null)
-                llist = temporaryNode.prev;
 
             return llist;
         }
