@@ -127,15 +127,12 @@ class Solution
         {
             CheckConstraints(llist,data,position);
 
-            var newNode = new SinglyLinkedListNode(data);
+            var newNode = new SinglyLinkedListNode(data) { next = llist };
             var currentNode = llist;
             var currentPosition = 0;
 
             if (llist == null || position == 0)
-            {
-                newNode.next = llist;
                 return newNode;
-            }
 
             while (currentNode.next != null && currentPosition < position - 1)
             {
