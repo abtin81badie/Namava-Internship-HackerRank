@@ -39,7 +39,7 @@ class Result
             throw new ArgumentException($"Total digits ({totalDigits}) is out of range.");
     }
 
-    public static List<string> bigSorting(List<string> unsorted)
+    public static List<string> BigSorting(List<string> unsorted)
     {
         CheckConstraints(unsorted);
 
@@ -70,7 +70,7 @@ class Solution
             unsorted.Add(unsortedItem);
         }
 
-        List<string> result = Result.bigSorting(unsorted);
+        List<string> result = Result.BigSorting(unsorted);
 
         Console.WriteLine(String.Join("\n", result));
 
