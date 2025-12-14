@@ -111,10 +111,15 @@ class Solution
     {
         CheckConstraints(head1, head2);
 
+        if (head1 == null)
+            return head2;
+        
+        if (head2 == null)
+            return head1;
+
         var dummyNode = new SinglyLinkedListNode(0);
         var current = dummyNode;
 
-        current.next = head1 ?? head2;
 
         while (head1 != null
                 && head2 != null)
@@ -133,10 +138,7 @@ class Solution
             current = current.next;
         }
 
-        if (head1 != null)
-            current.next = head1;
-        else
-            current.next = head2;
+        current.next = head1 ?? head2;
 
         return dummyNode.next;
     }
