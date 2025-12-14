@@ -82,68 +82,64 @@ class Solution
      * }
      *
      */
-        private static void CheckConstraints(SinglyLinkedListNode head1, SinglyLinkedListNode head2)
+    private static void CheckConstraints(SinglyLinkedListNode head1, SinglyLinkedListNode head2)
+    {
+        var countOne = 0;
+        var countTwo = 0;
+
+        while (head1 != null)
         {
-            var countOne = 0;
-            var countTwo = 0;
-
-            while (head1 != null) 
-            {
-                if (head1.data < 1 || head1.data > 1000)
-                    throw new ArgumentException($"Constraint violation in List 1: Element value {head1.data} is out of range. Must be between 1 and 1000.");
-                head1 = head1.next;
-                countOne ++;
-            }
-
-            while (head2 != null)
-            {
-                if (head2.data < 1 || head2.data > 1000)
-                    throw new ArgumentException($"Constraint violation in List 2: Element value {head2.data} is out of range. Must be between 1 and 1000.");
-                head2 = head2.next;
-                countTwo++;
-            }
-
-            if (countOne < 1 || countTwo < 1 || countOne > 1000 || countTwo > 1000)
-                throw new ArgumentException($"Constraint violation: List lengths must be between 1 and 1000. Found List 1 length: {countOne}, List 2 length: {countTwo}.");
+            if (head1.data < 1 || head1.data > 1000)
+                throw new ArgumentException($"Constraint violation in List 1: Element value {head1.data} is out of range. Must be between 1 and 1000.");
+            head1 = head1.next;
+            countOne++;
         }
 
-        static SinglyLinkedListNode MergeLists(SinglyLinkedListNode head1, SinglyLinkedListNode head2)
+        while (head2 != null)
         {
-            CheckConstraints(head1, head2);
+            if (head2.data < 1 || head2.data > 1000)
+                throw new ArgumentException($"Constraint violation in List 2: Element value {head2.data} is out of range. Must be between 1 and 1000.");
+            head2 = head2.next;
+            countTwo++;
+        }
 
-            if (head1 == null)
-                return head2;
+        if (countOne < 1 || countTwo < 1 || countOne > 1000 || countTwo > 1000)
+            throw new ArgumentException($"Constraint violation: List lengths must be between 1 and 1000. Found List 1 length: {countOne}, List 2 length: {countTwo}.");
+    }
 
-            if (head2 == null) 
-                return head1;
+    static SinglyLinkedListNode MergeLists(SinglyLinkedListNode head1, SinglyLinkedListNode head2)
+    {
+        CheckConstraints(head1, head2);
 
-            var dummyNode = new SinglyLinkedListNode(0);
-            var current = dummyNode;
+        var dummyNode = new SinglyLinkedListNode(0);
+        var current = dummyNode;
 
-            while (head1 != null
+        current.next = head1 ?? head2;
+
+        while (head1 != null
                 && head2 != null)
+        {
+            if (head1.data <= head2.data)
             {
-                if (head1.data <= head2.data)
-                {
-                    current.next = head1;
-                    head1 = head1.next;
-                }
-                else
-                {
-                    current.next = head2;
-                    head2 = head2.next;
-                }
-
-                current = current.next;
+                current.next = head1;
+                head1 = head1.next;
+            }
+            else
+            {
+                current.next = head2;
+                head2 = head2.next;
             }
 
-            if (head1 != null)
-                current.next = head1;
-            else
-                current.next = head2;
-
-            return dummyNode.next;
+            current = current.next;
         }
+
+        if (head1 != null)
+            current.next = head1;
+        else
+            current.next = head2;
+
+        return dummyNode.next;
+    }
 
     static void Main(string[] args)
     {
