@@ -39,6 +39,38 @@ class Result
 
     }
 
+    public static List<int> IceCreamParlorPointerSolution(int m, List<int> arr)
+    {
+        CheckConstraints(m, arr);
+
+        var sortedCosts = arr
+            .Select((c, i) => (Cost: c, Index: i + 1))
+            .OrderBy(x => x.Cost)
+            .ToList();
+
+        var left = 0;
+        var right = arr.Count - 1;
+
+        while (left < right)
+        {
+            var sum = sortedCosts[left].Cost + sortedCosts[right].Cost;
+
+            if (sum == m)
+                return new List<int>
+                {
+                    Math.Min(sortedCosts[left].Index, sortedCosts[right].Index),
+                    Math.Max(sortedCosts[left].Index, sortedCosts[right].Index)
+                };  
+
+            if (sum < m)
+                left++;
+            else
+                right--;
+        }
+
+        return new List<int>();
+    }
+
     public static List<int> IceCreamParlor(int m, List<int> arr)
     {
         CheckConstraints(m, arr);
@@ -77,7 +109,7 @@ class Solution
 
             List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
 
-            List<int> result = Result.IceCreamParlor(m, arr);
+            List<int> result = Result.IceCreamParlorPointerSolution(m, arr);
 
             Console.WriteLine(String.Join(" ", result));
         }
