@@ -43,18 +43,18 @@ class Result
     {
         CheckConstraints(m, arr);
 
-        var costToIndex = new Dictionary<int, int>();
+        var seenIndex = new Dictionary<int, int>();
 
         for (var i = 0; i < arr.Count; i++)
         {
             var cost = arr[i];
             var remaining = m - cost;
 
-            if (costToIndex.TryGetValue(remaining, out var index))
+            if (seenIndex.TryGetValue(remaining, out var index))
                 return new List<int> { index, i + 1 };
 
-            if (!costToIndex.ContainsKey(cost))
-                costToIndex[cost] = i + 1;
+            if (!seenIndex.ContainsKey(cost))
+                seenIndex[cost] = i + 1;
         }
 
         return new List<int>();
