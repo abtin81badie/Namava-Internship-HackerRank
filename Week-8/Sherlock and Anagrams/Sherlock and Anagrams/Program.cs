@@ -27,10 +27,45 @@ class Result
             throw new ArgumentException("Constraint violation: input length must be between 2 and 100 characters.");
 
         if (s.Any(character => !char.IsAsciiLetterLower(character)))
-            throw new ArgumentException("Constraint violation: input must contain only lowercase English letters (a-z)."); 
+            throw new ArgumentException("Constraint violation: input must contain only lowercase English letters (a-z).");
     }
 
-    public static int sherlockAndAnagrams(string s)
+    private static string GetSignature(int[] characterFrequency)
+    {
+        return string.Concat(
+            characterFrequency.Select((count, index) => count > 0
+                ? $"{(char)('a' + index)}{count}"
+                : string.Empty)
+        );
+    }
+    public static int SherlockAndAnagramsDictionarySolution(string s)
+    {
+        CheckConstraints(s);
+
+        var signatureFrequencyMap = new Dictionary<string, int>();
+
+        for (var startIndex = 0; startIndex < s.Length; startIndex++)
+        {
+            var characterFrequency = new int[26];
+            for (var currentIndex = startIndex; currentIndex < s.Length; currentIndex++)
+            {
+                var characterIndex = s[currentIndex] - 'a';
+                characterFrequency[characterIndex]++;
+
+                var signature = GetSignature(characterFrequency);
+
+                signatureFrequencyMap[signature] = signatureFrequencyMap.GetValueOrDefault(signature) + 1;
+            }
+        }
+
+        return signatureFrequencyMap
+            .Values
+            .Sum(count =>
+                count * (count - 1) / 2
+            );
+    }
+
+    public static int SherlockAndAnagrams(string s)
     {
         CheckConstraints(s);
 
@@ -71,7 +106,7 @@ class Solution
         {
             string s = Console.ReadLine();
 
-            int result = Result.sherlockAndAnagrams(s);
+            int result = Result.SherlockAndAnagramsDictionarySolution(s);
 
             Console.WriteLine(result);
         }
