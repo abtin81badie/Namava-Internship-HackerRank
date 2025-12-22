@@ -34,19 +34,19 @@ class Result
     {
         CheckConstraints(s);
 
-        var stack = new StringBuilder();
+        var buffer = new StringBuilder();
 
         foreach (char character in s)
         {
-            if (stack.Length > 0 && stack[stack.Length - 1] == character)
-                stack.Remove(stack.Length - 1, 1);
+            if (buffer.Length > 0 && buffer[buffer.Length - 1] == character)
+                buffer.Length--;
             else
-                stack.Append(character);
+                buffer.Append(character);
         }
 
-        return stack.Length == 0
+        return buffer.Length == 0
             ? "Empty String"
-            : stack.ToString();
+            : buffer.ToString();
     }
 
     public static string SuperReducedString(string s)
