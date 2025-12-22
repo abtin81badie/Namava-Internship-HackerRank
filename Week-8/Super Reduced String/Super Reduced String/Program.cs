@@ -16,7 +16,7 @@ class Result
 {
 
     /*
-     * Complete the 'superReducedString' function below.
+     * Complete the 'SuperReducedString' function below.
      *
      * The function is expected to return a STRING.
      * The function accepts STRING s as parameter.
@@ -30,7 +30,26 @@ class Result
             throw new ArgumentException("Constraint violation: input must contain only lowercase English letters (a-z).");
     }
 
-    public static string superReducedString(string s)
+    public static string SuperReducedStringStringBuilder(string s)
+    {
+        CheckConstraints(s);
+
+        var stack = new StringBuilder();
+
+        foreach (char character in s)
+        {
+            if (stack.Length > 0 && stack[stack.Length - 1] == character)
+                stack.Remove(stack.Length - 1, 1);
+            else
+                stack.Append(character);
+        }
+
+        return stack.Length == 0
+            ? "Empty String"
+            : stack.ToString();
+    }
+
+    public static string SuperReducedString(string s)
     {
         CheckConstraints(s);
 
@@ -57,7 +76,7 @@ class Solution
     {
         string s = Console.ReadLine();
 
-        string result = Result.superReducedString(s);
+        string result = Result.SuperReducedStringStringBuilder(s);
 
         Console.WriteLine(result);
     }
