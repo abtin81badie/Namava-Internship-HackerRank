@@ -30,39 +30,28 @@ class Result
             throw new ArgumentException("Constraint violation: input must contain only lowercase English letters (a-z).");
     }
 
-    private static string GetSignature(int[] characterFrequency)
-    {
-        return string.Concat(
-            characterFrequency.Select((count, index) => count > 0
-                ? $"{(char)('a' + index)}{count}"
-                : string.Empty)
-        );
-    }
     public static int SherlockAndAnagramsDictionarySolution(string s)
     {
         CheckConstraints(s);
 
         var signatureFrequencyMap = new Dictionary<string, int>();
+        var totalAnagramPairs = 0;
 
         for (var startIndex = 0; startIndex < s.Length; startIndex++)
         {
             var characterFrequency = new int[26];
             for (var currentIndex = startIndex; currentIndex < s.Length; currentIndex++)
             {
-                var characterIndex = s[currentIndex] - 'a';
-                characterFrequency[characterIndex]++;
+                characterFrequency[s[currentIndex] - 'a']++;
 
-                var signature = GetSignature(characterFrequency);
+                var key = string.Join('#', characterFrequency);
 
-                signatureFrequencyMap[signature] = signatureFrequencyMap.GetValueOrDefault(signature) + 1;
+                totalAnagramPairs += signatureFrequencyMap.GetValueOrDefault(key);
+                signatureFrequencyMap[key] = signatureFrequencyMap.GetValueOrDefault(key) + 1;
             }
         }
 
-        return signatureFrequencyMap
-            .Values
-            .Sum(count =>
-                count * (count - 1) / 2
-            );
+        return totalAnagramPairs;
     }
 
     public static int SherlockAndAnagrams(string s)
