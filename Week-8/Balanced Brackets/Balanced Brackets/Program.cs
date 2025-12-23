@@ -16,7 +16,7 @@ class Result
 {
 
     /*
-     * Complete the 'isBalanced' function below.
+     * Complete the 'IsBalanced' function below.
      *
      * The function is expected to return a STRING.
      * The function accepts STRING s as parameter.
@@ -30,7 +30,7 @@ class Result
             throw new AggregateException("Input length must be between 1 and 1000 characters.");
     }
 
-    public static string isBalanced(string s)
+    public static string IsBalanced(string s)
     {
         CheckConstraints(s);
 
@@ -67,7 +67,7 @@ class Solution
         {
             string s = Console.ReadLine();
 
-            string result = Result.isBalanced(s);
+            string result = Result.IsBalanced(s);
 
             Console.WriteLine(result);
         }
