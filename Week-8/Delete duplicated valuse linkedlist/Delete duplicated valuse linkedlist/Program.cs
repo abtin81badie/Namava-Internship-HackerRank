@@ -111,6 +111,31 @@ class Result
             throw new ArgumentException("The number of nodes must be between 1 and 1000.");
     }
 
+    public static SinglyLinkedListNode RemoveDuplicatesUnsortedLinkedList(SinglyLinkedListNode llist)
+    {
+        if (llist == null)
+            return null;
+
+        var seenValues = new HashSet<int>();
+        var currentNode = llist;
+        SinglyLinkedListNode previousNode = null;
+
+        while (currentNode != null)
+        {
+            if (!seenValues.Contains(currentNode.data))
+            {
+                seenValues.Add(currentNode.data);
+                previousNode = currentNode;
+            } 
+            else
+                previousNode.next = currentNode.next;
+
+            currentNode = currentNode.next;
+        }
+
+        return llist;
+    }
+
     public static SinglyLinkedListNode RemoveDuplicates(SinglyLinkedListNode llist)
     {
         CheckConstraints(llist);
@@ -150,7 +175,7 @@ class Solution
                 llist.InsertNode(llistItem);
             }
 
-            SinglyLinkedListNode llist1 = Result.RemoveDuplicates(llist.head);
+            SinglyLinkedListNode llist1 = Result.RemoveDuplicatesUnsortedLinkedList(llist.head);
 
             SinglyLinkedListPrintHelepr.PrintList(llist1, " ");
             Console.WriteLine();
