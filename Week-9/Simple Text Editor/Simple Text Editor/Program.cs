@@ -39,26 +39,69 @@ public class InputValidator
             throw new ArgumentException($"Constraint Violation: Index {k} is out of bounds for string length {currentStringLength}.");
     }
 }
+
+public abstract class EditorCommand
+{
+    public abstract void Undo(StringBuilder editorState);
+}
+
+public class AppendCommand : EditorCommand
+{
+    private readonly int _lengthToRemove;
+
+    public AppendCommand(int length)
+    {
+        _lengthToRemove = length;
+    }
+
+    public override void Undo(StringBuilder editorState)
+    {
+        editorState.Remove(editorState.Length - _lengthToRemove, _lengthToRemove);
+    }
+}
+
+public class DeleteCommand : EditorCommand
+{
+    private readonly string _deletedText;
+
+    public DeleteCommand(string deletedText)
+    {
+        _deletedText = deletedText;
+    }
+
+    public override void Undo(StringBuilder editorState)
+    {
+        editorState.Append(_deletedText);
+    }
+}
+
 public class TextEditor
 {
-    private string _currentString = string.Empty;
-    private readonly Stack<string> _history = new Stack<string>();
+    private readonly StringBuilder _currentString;
+    private readonly Stack<EditorCommand> _history;
 
-    public int currentLength => _currentString.Length;
+    public TextEditor()
+    {
+        _currentString = new StringBuilder();
+        _history = new Stack<EditorCommand>();
+    }
+
+    public int CurrentLength => _currentString.Length;
 
     public void Append(string w)
     {
-        _history.Push(_currentString);
-        _currentString += w;
+        _currentString.Append(w);
+        _history.Push(new AppendCommand(w.Length));
     }
 
     public void Delete(int k)
     {
-        _history.Push(_currentString);
-        _currentString = _currentString.Substring(0, _currentString.Length - k);
+        string deletedSubstring = _currentString.ToString(_currentString.Length - k, k);
+        _currentString.Remove(_currentString.Length - k, k);
+        _history.Push(new DeleteCommand(deletedSubstring));
     }
 
-    public char GetCharacter(int k)
+    public char GetChar(int k) 
     {
         return _currentString[k - 1];
     }
@@ -66,8 +109,10 @@ public class TextEditor
     public void Undo()
     {
         if (_history.Count > 0) 
-            _currentString = _history.Pop();
-    }
+        {
+            var lastCommand = _history.Pop();
+            lastCommand.Undo(_currentString);
+        }
 }
 
 class Solution
@@ -100,16 +145,16 @@ class Solution
                 }
                 else if (type == 2)
                 {
-                    inputValidator.ValidateDelete(int.Parse(parts[1]), editor.currentLength);
+                    inputValidator.ValidateDelete(int.Parse(parts[1]), editor.CurrentLength);
                     editor.Delete(int.Parse(parts[1]));
                 }
                 else if (type == 3)
                 {
-                    inputValidator.ValidateGet(int.Parse(parts[1]), editor.currentLength);
+                    inputValidator.ValidateGet(int.Parse(parts[1]), editor.CurrentLength);
                     outputBuffer.AppendLine(editor.GetCharacter(int.Parse(parts[1])).ToString());
                 }
                 else if (type == 4)
-                    editor.Undo();  
+                    editor.Undo();
 
             }
         }
