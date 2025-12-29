@@ -40,36 +40,51 @@ public class InputValidator
     }
 }
 
-public abstract class EditorCommand
+public interface IEditorCommand
 {
-    public abstract void Undo(StringBuilder editorState);
+    void Execute(StringBuilder editorState);
+    void Undo(StringBuilder editorState);
 }
 
-public class AppendCommand : EditorCommand
+public class AppendCommand : IEditorCommand
 {
-    private readonly int _lengthToRemove;
+    private readonly string _textToAppend;
 
-    public AppendCommand(int length)
+    public AppendCommand(string text)
     {
-        _lengthToRemove = length;
+        _textToAppend = text;
     }
 
-    public override void Undo(StringBuilder editorState)
+    public void Execute(StringBuilder editorState)
     {
-        editorState.Remove(editorState.Length - _lengthToRemove, _lengthToRemove);
+        editorState.Append(_textToAppend);
+    }
+
+    public void Undo(StringBuilder editorState)
+    {
+        editorState.Remove(editorState.Length - _textToAppend.Length, _textToAppend.Length);
     }
 }
 
-public class DeleteCommand : EditorCommand
+public class DeleteCommand : IEditorCommand
 {
-    private readonly string _deletedText;
+    private readonly int _k;
+    private string _deletedText;
 
-    public DeleteCommand(string deletedText)
+    public DeleteCommand(int k)
     {
-        _deletedText = deletedText;
+        _k = k;
+        _deletedText = string.Empty;
     }
 
-    public override void Undo(StringBuilder editorState)
+    public void Execute(StringBuilder editorState)
+    {
+        _deletedText = editorState.ToString(editorState.Length - _k, _k);
+
+        editorState.Remove(editorState.Length - _k, _k);
+    }
+
+    public void Undo(StringBuilder editorState)
     {
         editorState.Append(_deletedText);
     }
@@ -78,27 +93,32 @@ public class DeleteCommand : EditorCommand
 public class TextEditor
 {
     private readonly StringBuilder _currentString;
-    private readonly Stack<EditorCommand> _history;
+    private readonly Stack<IEditorCommand> _history;
+
+    private void ExecuteCommand(IEditorCommand command)
+    {
+        command.Execute(_currentString);
+        _history.Push(command);
+    }
 
     public TextEditor()
     {
         _currentString = new StringBuilder();
-        _history = new Stack<EditorCommand>();
+        _history = new Stack<IEditorCommand>();
     }
 
     public int CurrentLength => _currentString.Length;
 
     public void Append(string w)
     {
-        _currentString.Append(w);
-        _history.Push(new AppendCommand(w.Length));
+        var command = new AppendCommand(w);
+        ExecuteCommand(command);
     }
 
     public void Delete(int k)
     {
-        string deletedSubstring = _currentString.ToString(_currentString.Length - k, k);
-        _currentString.Remove(_currentString.Length - k, k);
-        _history.Push(new DeleteCommand(deletedSubstring));
+        var command = new DeleteCommand(k);
+        ExecuteCommand(command);
     }
 
     public char GetCharacter(int k) 
