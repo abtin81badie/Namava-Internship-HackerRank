@@ -101,18 +101,19 @@ public class TextEditor
         _history.Push(new DeleteCommand(deletedSubstring));
     }
 
-    public char GetChar(int k) 
+    public char GetCharacter(int k) 
     {
         return _currentString[k - 1];
     }
 
     public void Undo()
     {
-        if (_history.Count > 0) 
+        if (_history.Count > 0)
         {
             var lastCommand = _history.Pop();
             lastCommand.Undo(_currentString);
         }
+    }
 }
 
 class Solution
