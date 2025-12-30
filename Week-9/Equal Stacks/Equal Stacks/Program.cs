@@ -46,9 +46,11 @@ class Result
         var sum2 = h2.Sum();
         var sum3 = h3.Sum();
 
-        int index1 = 0, index2 = 0, index3 = 0;
+        var index1 = 0;
+        var index2 = 0;
+        var index3 = 0;
 
-        while (! (sum1 == sum2 && sum2 == sum3))
+        while (!(sum1 == sum2 && sum2 == sum3))
         {
             if (sum1 == 0
                 || sum2 == 0
