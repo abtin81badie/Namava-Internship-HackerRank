@@ -63,6 +63,31 @@ class Result
         return maxLength;
     }
 
+    public static int AlternateOptimized(string s)
+    {
+        CheckConstraints(s);
+
+        var uniqueCharacters = s.Distinct().ToList();
+
+        if (uniqueCharacters.Count < 2)
+            return 0;
+
+        var characterPairs = uniqueCharacters
+            .SelectMany((first, index) => uniqueCharacters.Skip(index + 1)
+            .Select(second => new { first, second }));
+
+        var maxLength = 0;
+
+        foreach (var pair in characterPairs)
+        {
+            var filtered = s.Where(c => c == pair.first || c == pair.second).ToList();
+
+            if (IsValid(filtered))
+                maxLength = Math.Max(maxLength, filtered.Count);
+        }
+
+        return maxLength;
+    }
 }
 
 class Solution
