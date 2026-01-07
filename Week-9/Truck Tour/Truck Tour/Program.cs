@@ -43,11 +43,14 @@ class Result
         var start = 0;
         var currentFuel = 0;
 
-        for (var i = 0; i < petrolpumps.Count; i++) 
+        for (var i = 0; i < petrolpumps.Count; i++)
         {
-            currentFuel += petrolpumps[i].First() - petrolpumps[i][1];
+            var petrol = petrolpumps[i].First();
+            var distance = petrolpumps[i].Last();
 
-            if (currentFuel < 0) 
+            currentFuel += petrol - distance;
+
+            if (currentFuel < 0)
             {
                 start = i + 1;
                 currentFuel = 0;
