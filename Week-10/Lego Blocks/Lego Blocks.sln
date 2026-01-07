@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lego Blocks", "Lego Blocks\Lego Blocks.csproj", "{578EB423-FE6D-4086-9D35-86D4F7AE40A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{578EB423-FE6D-4086-9D35-86D4F7AE40A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{578EB423-FE6D-4086-9D35-86D4F7AE40A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{578EB423-FE6D-4086-9D35-86D4F7AE40A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{578EB423-FE6D-4086-9D35-86D4F7AE40A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B5D35CC-F165-483C-8DF8-8E5177E35417}
+	EndGlobalSection
+EndGlobal
